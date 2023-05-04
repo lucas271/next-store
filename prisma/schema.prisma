@@ -1,0 +1,234 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  lastLogin DateTime?
+  userInfo  UserInfo?
+
+  //relations
+
+  userCredential UserCredentials?
+  carts          Cart[]
+  favorites      Favorite[]
+  comments       Review[]
+  rating         Rating[]
+
+  //indexex
+  @@index([id])
+}
+
+//user related models
+
+model UserCredentials {
+  email String @id
+
+  updatedAt DateTime @updatedAt
+
+  username String
+  password String
+  role     Role    @default(BASIC)
+  userId   String? @unique
+
+  //relations
+  user User? @relation(fields: [userId], references: [id])
+
+  //indexes
+  @@index([email, username, role])
+}
+
+model UserInfo {
+  id String @id @default(uuid())
+
+  updatedAt DateTime @updatedAt
+
+  firstName String
+  lastName  String
+  avatarImg String
+  userId    String? @unique
+
+  //relations
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model Cart {
+  id String @id
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  status    CartStatus
+
+  //relations
+  products CartItem[]
+  user     User       @relation(fields: [id], references: [id])
+
+  //index
+  @@index([id])
+}
+
+//cart related models
+
+model CartItem {
+  id String @id @default(uuid())
+
+  quantity   Int
+  product_id String
+  cart_id    String
+
+  //relations
+  cart    Cart    @relation(fields: [cart_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  //index
+  @@index([id])
+}
+
+model Product {
+  id String @id @default(uuid())
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  name         String
+  description  String
+  title        String
+  price        Float
+  img          String
+  quantity     Int
+  is_available Boolean @default(true)
+
+  category_name String @unique
+  brand_id      String
+
+  //relations
+  attributes Attributes?
+
+  favorites Favorite[]
+  comments  Review[]
+  rating    Rating[]
+  cart_item CartItem[]
+
+  brand    Brand    @relation(fields: [brand_id], references: [name])
+  category Category @relation(fields: [category_name], references: [name])
+
+  //indexes
+  @@index([id, name])
+}
+
+//product and user related models
+model Review {
+  id String @id @default(uuid())
+
+  message    String
+  userId     String
+  product_id String
+
+  //relations
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  //indexes
+  @@index([id])
+}
+
+model Rating {
+  id String @id @default(uuid())
+
+  rate Float
+
+  user_id    String
+  product_id String
+
+  //relations
+  user    User    @relation(fields: [user_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  //block attributes
+  @@unique([product_id, user_id])
+  //indexes
+  @@index([id])
+}
+
+model Favorite {
+  id String @id @default(uuid())
+
+  user_id    String
+  product_id String
+
+  //relations
+  user    User    @relation(fields: [user_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  //block attributes
+  @@unique([product_id, user_id])
+  //indexes
+  @@index([id])
+}
+
+//product related models
+model Category {
+  name String @id
+
+  description String?
+  image       String?
+
+  is_active Boolean @default(true)
+
+  //relations
+  product Product[]
+
+  //indexes
+  @@index([name])
+}
+
+model Brand {
+  name String @id
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  description String
+  logo        String
+
+  //relations
+  product_id Product[]
+
+  //indexes
+  @@index([name])
+}
+
+model Attributes {
+  id String @id @default(uuid())
+
+  primary_color   String?
+  secondary_color String?
+  size            String?
+  material        String?
+  weight          String?
+  dimensions      String?
+  features        String?
+
+  product_id String @unique
+
+  //relations
+  product Product @relation(fields: [product_id], references: [id])
+}
+
+//enums
+enum Role {
+  ADMIN
+  BASIC
+}
+
+enum CartStatus {
+  PENDING
+  COMPLETED
+  CANCELED
+}
