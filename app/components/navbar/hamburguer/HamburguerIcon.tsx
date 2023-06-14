@@ -7,11 +7,12 @@ export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, a
      if (hamburguerIsOpen) {
         const aside: HTMLElement | null = asideRef?.current;
         if (aside) {
-           aside.className += " animate-aside-slide-off";
+           aside.classList.add("animate-aside-slide-off")
            setHamburguerAnimateOut(true)
            aside.addEventListener("animationend", () => {
               setHamburguerIsOpen(false);
               aside.classList.remove("overflow-hidden");
+              aside.classList.add("hidden")
               setHamburguerAnimateOut(false)
            });
         }else{
