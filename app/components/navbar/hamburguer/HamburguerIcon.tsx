@@ -1,12 +1,11 @@
 import { Dispatch, MutableRefObject, SetStateAction, useState } from "react";
 
-export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, ref}: {setHamburguerIsOpen: Dispatch<SetStateAction<boolean>>, hamburguerIsOpen: boolean, ref:MutableRefObject<HTMLElement | null>}){
+export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, asideRef}: {setHamburguerIsOpen: Dispatch<SetStateAction<boolean>>, hamburguerIsOpen: boolean, asideRef:MutableRefObject<HTMLElement | null>}){
   const [hamburguerAnimateOut, setHamburguerAnimateOut] = useState<boolean>(false)
   
   const handleHamburguer = (): void => {
      if (hamburguerIsOpen) {
-      
-        const aside: HTMLElement | null = ref.current;
+        const aside: HTMLElement | null = asideRef?.current;
         if (aside) {
            aside.className += " animate-aside-slide-off";
            setHamburguerAnimateOut(true)
@@ -15,6 +14,8 @@ export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, r
               aside.classList.remove("overflow-hidden");
               setHamburguerAnimateOut(false)
            });
+        }else{
+          setHamburguerIsOpen(false)
         }
         return;
      }
