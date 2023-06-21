@@ -1,6 +1,4 @@
-import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill, BsTicket, BsTrash } from "react-icons/bs";
 import StyledButton from "../styledButton/StyledButton";
-import StyledInput from "../styledInput/StyledInput";
 import { Dispatch, SetStateAction } from "react";
 import ItemsSummary from "./cartSummary/ItemsSummary";
 import PriceSummary from "./cartSummary/PriceSummary";
@@ -8,7 +6,7 @@ import CupomField from "./cartSummary/CupomField";
 
 export default function CartSummary({isDetails, setIsDetails}: {isDetails: boolean, setIsDetails: Dispatch<SetStateAction<boolean>>}){
   return <>
-    <div className={`${isDetails && 'hidden'} h-full justify-between sm:divide-gray-300 sm:border-l-2 w-full sm:w-2/6 flex flex-col`}>
+    <div className={`${isDetails && 'hidden'} h-full justify-between sm:divide-gray-300 sm:border-l-2 w-full sm:w-2/6 sm:flex sm:flex-col`}>
           <h2 className="block font-bold text-lg mb-2 ml-2 mt-3 text-gray-700">Resumo de compras</h2>
           <div className="h-[30%] overflow-auto mb-2">
              <ItemsSummary/>

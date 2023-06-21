@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { AiOutlineArrowDown } from 'react-icons/ai'
 
 export default function Banner () {
@@ -21,9 +22,11 @@ export default function Banner () {
                </section>
             </section>
             <footer className="absolute bottom-2 w-full h-8 flex items-center justify-center sm:-bottom-2">
-               <div className="w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-red-200 focus:bg-red-200 transition duration-200 border border-red-200 shadow-2xl rounded-full sm:w-14 sm:h-14 z-50" tabIndex={0}>
-                  <AiOutlineArrowDown className="text-xl text-white sm:text-2xl text-center" />
-               </div>
+               <Link href='#carrousel' tabIndex={-1}>
+                  <div className="w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-red-200 focus:bg-red-200 transition duration-200 border border-red-200 shadow-2xl rounded-full sm:w-14 sm:h-14 z-50" tabIndex={0}>
+                     <AiOutlineArrowDown className="text-xl text-white sm:text-2xl text-center" />
+                  </div>
+               </Link>
             </footer>
          </div>
       </div>

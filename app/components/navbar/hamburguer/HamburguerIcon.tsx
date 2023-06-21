@@ -28,6 +28,7 @@ export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, a
   return <>
     <div
       aria-label={"0"}
+      tabIndex={0}
       className="sm:hidden group cursor-pointer flex flex-col items-center justify-center p-1 py-1.5 space-y-1 z-50"
       onClick={handleHamburguer}
     >
