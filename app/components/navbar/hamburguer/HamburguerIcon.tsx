@@ -4,24 +4,25 @@ export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, a
   const [hamburguerAnimateOut, setHamburguerAnimateOut] = useState<boolean>(false)
   
   const handleHamburguer = (): void => {
-     if (hamburguerIsOpen) {
-        const aside: HTMLElement | null = asideRef?.current;
-        if (aside) {
-           aside.classList.add("animate-aside-slide-off")
-           setHamburguerAnimateOut(true)
-           aside.addEventListener("animationend", () => {
-              setHamburguerIsOpen(false);
-              aside.classList.remove("overflow-hidden");
-              aside.classList.add("hidden")
-              setHamburguerAnimateOut(false)
-           });
-        }else{
-          setHamburguerIsOpen(false)
-        }
-        return;
+    const body = document.body
+    if (hamburguerIsOpen) {
+      const aside: HTMLElement | null = asideRef?.current;
+      if (aside) {
+          aside.classList.add("animate-aside-slide-off")
+          setHamburguerAnimateOut(true)
+          body.classList.remove("overflow-hidden")
+          aside.addEventListener("animationend", () => {
+            setHamburguerIsOpen(false);
+            aside.classList.add("hidden")
+            setHamburguerAnimateOut(false)
+          })
+      }else{
+        setHamburguerIsOpen(false)
+      }
+      return
      }
-     document.body.classList.add("overflow-hidden");
-     setHamburguerIsOpen(true);
+     body.classList.add("overflow-hidden")
+     setHamburguerIsOpen(true)
   };
 
   return <>
