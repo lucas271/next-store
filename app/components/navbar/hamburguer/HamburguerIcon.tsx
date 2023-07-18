@@ -11,6 +11,7 @@ export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, a
           aside.classList.add("animate-aside-slide-off")
           setHamburguerAnimateOut(true)
           body.classList.remove("overflow-hidden")
+          aside.classList.add("overflow-hidden")
           aside.addEventListener("animationend", () => {
             setHamburguerIsOpen(false);
             aside.classList.add("hidden")
@@ -22,6 +23,9 @@ export default function HamburguerIcon({setHamburguerIsOpen, hamburguerIsOpen, a
       return
      }
      body.classList.add("overflow-hidden")
+
+     //if the client changes screen size while the hamburguer is open prevent overflow to be hidden
+     body.classList.add("sm:overflow-auto")
      setHamburguerIsOpen(true)
   };
 
