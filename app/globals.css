@@ -17,18 +17,6 @@
   }
 }
 
-
-body {
-  .button_styled{
-    background: linear-gradient(to left, salmon 50%, lightblue 50%) right;
-    background-size: 200%;
-    transition: .5s ease-out;
-
-
-  }
-  .button_styled:hover{
-    background-position: left;
-  }
-
-
+html{
+  @apply scroll-smooth box-border
 }
