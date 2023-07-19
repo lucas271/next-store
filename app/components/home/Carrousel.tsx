@@ -22,8 +22,8 @@ const items = [{
 
 export default function Carrousel(){
    return <>
-      <section className="min-w-screen min-h-screen-minus-nav" id="carrousel">
-         <div className="container h-full min-h-screen-minus-nav w-full m-auto mt-4 grid grid-cols-2 sm:grid-cols-3 gap-6 px-2 gap-y-6">
+      <section className="min-w-screen min-h-screen-minus-nav bg-white" id="carrousel">
+         <div className="container h-full min-h-screen-minus-nav w-full m-auto  grid grid-cols-2 sm:grid-cols-3 gap-6 px-2 gap-y-6">
             {items.map((item, index) => {
                return <div key={item.title} className={`col-span-1 text-centerbg-yellow-200 rounded-md h-4/5 relative overflow-hidden ${index === 2 ? 'col-span-2 self-start sm:self-center sm:col-span-1': "sm:self-center self-end"} `} tabIndex={0}>
                   <div className="w-full h-full transition duration-[3500ms] ease-out hover:scale-150 cursor-pointer">
