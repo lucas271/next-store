@@ -1,15 +1,18 @@
-import StyledButton from "@/app/components/styledButton/StyledButton";
+import StyledButton from "@/app/components/utility/styledButton/StyledButton";
 import Image from "next/image";
 
 export default function Item(){
   return<>
     <main className="w-[90%] h-screen-minus-nav m-auto relative py-5">
-      <div className="p-3 h-full gap-3 w-full bg-yellow-300 rounded-lg flex flex-col justify-evenly items-center">
-        <div className="h-4/6">
-          <Image src={'/bottle.png'} width={300} height={300} alt={'bottle'}/>
+      <div className="p-3 h-full gap-3 w-full bg-yellow-300 rounded-lg flex flex-col sm:flex-row justify-evenly items-center">
+        <div className="">
+
         </div>
-        <div className="h-2/6 relative">
-          <article className="h-1/2">
+        <div className="h-full sm:h-4/6 w-1/3 sm:w-full relative">
+          <Image src={'/bottle.png'} fill alt="bottle"/>
+        </div>
+        <div className="h-full sm:h-2/6 w-2/3 sm:w-full relative flex justify-evenly flex-col overflow-auto">
+          <article className="h-fit h-max-1/2 flex flex-col justify-center text-xl sm:text-lg">
             <h2>Item blabla</h2>
             <p>esse item faz bla bla bla bla</p>
           </article>
