@@ -1,7 +1,4 @@
-import { BsArrowReturnLeft } from 'react-icons/bs'
 import '../globals.css'
-import Link from 'next/dist/client/link'
-
 import { Roboto } from 'next/font/google'
 
 const roboto= Roboto({
