@@ -1,9 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
-import StyledButton from "../../styledButton/StyledButton";
 import './style.css'
 
-export default function PriceSummary({isDetails, setIsDetails}: {isDetails: boolean, setIsDetails: Dispatch<SetStateAction<boolean>>}){
-  return <div className="price_summary px-2">
+export default function PriceSummary(){
+  return <div className="price_summary px-2 lg:text-xl sm: text-lg">
     <div>
       <span >Subtotal </span>
       <span>R${(3102930129).toFixed(2).replace('.',',')}</span>
