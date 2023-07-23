@@ -1,7 +1,7 @@
-import ProductRecommendation from '../components/ProductRecommendation/ProductRecommendation'
-import Banner from '../components/home/Banner'
-import Carrousel from '../components/home/Carrousel'
-import Footer from '../components/home/Footer'
+import ProductRecommendation from '../components/shared/productRecommendation/ProductRecommendation'
+import Banner from '../components/views/home/Banner'
+import Carrousel from '../components/views/home/Carrousel'
+import Footer from '../components/views/home/Footer'
 import StyledButton from '../components/utility/styledButton/StyledButton'
 
 

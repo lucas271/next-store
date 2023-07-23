@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import StyledButton from "../../utility/styledButton/StyledButton";
-import StyledInput from "../../utility/styledInput/StyledInput";
+import StyledButton from "../../../utility/styledButton/StyledButton";
+import StyledInput from "../../../utility/styledInput/StyledInput";
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { PaymentTypeInterface, PaymentValidationType, paymentValidation } from "./paymentValidation";
-import ErrorMessage from "../../utility/errorMessage/ErrorMessage";
+import ErrorMessage from "../../../utility/errorMessage/ErrorMessage";
 
 export default function PaymentForm({isDetails, setIsDetails}: {isDetails: boolean, setIsDetails: Dispatch<SetStateAction<boolean>>}){
   const [output, setOutput] = useState('')

@@ -1,14 +1,14 @@
 "use client"
 
 import { BsLock, BsPersonCircle } from "react-icons/bs";
-import StyledButton from "../utility/styledButton/StyledButton";
-import StyledInput from "../utility/styledInput/StyledInput";
+import StyledButton from "../../utility/styledButton/StyledButton";
+import StyledInput from "../../utility/styledInput/StyledInput";
 import { AiOutlineMail } from "react-icons/ai";
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { SignInType, SignUpType, signInValidation, signUpValidation } from "./validateAuth";
 import { useState } from "react";
-import ErrorMessage from "../utility/errorMessage/ErrorMessage";
+import ErrorMessage from "../../utility/errorMessage/ErrorMessage";
 
 export default function AuthForm({isSignIn}: {isSignIn: boolean}){
   const [output, setOutput] = useState()

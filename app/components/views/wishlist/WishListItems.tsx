@@ -1,7 +1,7 @@
 import { BsTrash } from "react-icons/bs"
-import StyledButton from "../utility/styledButton/StyledButton"
+import StyledButton from "../../utility/styledButton/StyledButton"
 import Image from 'next/image'
-import ProductRecommendation from "../ProductRecommendation/ProductRecommendation"
+import ProductRecommendation from "../../shared/productRecommendation/ProductRecommendation"
 
 const WishListItems = ({className}: {className?: string}) => {
   return <>

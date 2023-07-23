@@ -1,4 +1,4 @@
-import StyledButton from "../utility/styledButton/StyledButton"
+import StyledButton from "../../utility/styledButton/StyledButton"
 import Image from 'next/image'
 
 const ProductRecommendation = () => {

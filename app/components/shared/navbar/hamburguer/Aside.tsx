@@ -2,7 +2,7 @@
 import { forwardRef } from "react";
 import IconLinkItems from "../navbarLinks/IconLinkItems";
 import CategoryItems from "../navbarLinks/CategoryItems";
-import SearchBar from "../../utility/searchBar/SearchBar";
+import SearchBar from "../../../utility/searchBar/SearchBar";
 
 export default forwardRef<HTMLElement | null, {}>((_props, ref) => {
    return <>

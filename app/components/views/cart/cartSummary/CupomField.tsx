@@ -1,6 +1,6 @@
 import { BsTicket } from "react-icons/bs";
-import StyledButton from "../../utility/styledButton/StyledButton";
-import StyledInput from "../../utility/styledInput/StyledInput";
+import StyledButton from "../../../utility/styledButton/StyledButton";
+import StyledInput from "../../../utility/styledInput/StyledInput";
 
 export default function CupomField(){
   return <>

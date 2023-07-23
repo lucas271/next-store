@@ -1,5 +1,5 @@
 import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineSmile, AiOutlineTwitter } from "react-icons/ai";
-import StyledButton from "../utility/styledButton/StyledButton";
+import StyledButton from "../../utility/styledButton/StyledButton";
 import Link from "next/link";
 
 export default function Footer(){

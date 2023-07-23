@@ -1,6 +1,6 @@
-import AuthFooter from "@/app/components/auth/AuthFooter";
-import AuthHeader from "@/app/components/auth/AuthHeader";
-import AuthForm from "@/app/components/auth/AuthForm";
+import AuthFooter from "@/app/components/views/auth/AuthFooter";
+import AuthHeader from "@/app/components/views/auth/AuthHeader";
+import AuthForm from "@/app/components/views/auth/AuthForm";
 
 export default function login(){
    return <>

@@ -1,4 +1,4 @@
-import StyledButton from "../utility/styledButton/StyledButton";
+import StyledButton from "../../utility/styledButton/StyledButton";
 import { Dispatch, SetStateAction } from "react";
 import ItemsSummary from "./cartSummary/ItemsSummary";
 import PriceSummary from "./cartSummary/PriceSummary";

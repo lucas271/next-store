@@ -1,6 +1,6 @@
-import ProductRecommendation from "@/app/components/ProductRecommendation/ProductRecommendation"
-import WishListHeader from "@/app/components/wishlist/WishListHeader"
-import WishListItems from "@/app/components/wishlist/WishListItems"
+import ProductRecommendation from "@/app/components/shared/productRecommendation/ProductRecommendation"
+import WishListHeader from "@/app/components/views/wishlist/WishListHeader"
+import WishListItems from "@/app/components/views/wishlist/WishListItems"
 
 const wishList = () => {
   return <>
