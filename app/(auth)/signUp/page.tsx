@@ -1,8 +1,8 @@
-import AuthFooter from "@/app/components/views/auth/AuthFooter";
-import AuthHeader from "@/app/components/views/auth/AuthHeader";
-import AuthForm from "@/app/components/views/auth/AuthForm";
+import AuthHeader from "@/app/_components/pages/auth/AuthHeader";
+import AuthForm from "@/app/_components/forms/AuthForm";
+import AuthFooter from "@/app/_components/pages/auth/AuthFooter";
 
-export default function login(){
+export default async function login(){
    return <>
       <AuthHeader isSignIn={false}/>
       <div className="w-3/4 m-auto h-full flex justify-around flex-col">

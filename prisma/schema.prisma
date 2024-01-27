@@ -1,20 +1,21 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
 model User {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  lastLogin DateTime?
-  userInfo  UserInfo?
+  name  String 
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  role      Role     @default(BASIC)
+  image String   @default("#")
 
   //relations
-
   userCredential UserCredentials?
   carts          Cart[]
   favorites      Favorite[]
@@ -22,40 +23,17 @@ model User {
   rating         Rating[]
 
   //indexex
-  @@index([id])
+  @@index([id, email])
 }
 
 //user related models
 
 model UserCredentials {
-  email String @id
+  updatedAt DateTime @updatedAt()
+  password  String
+  userId    String   @id
 
-  updatedAt DateTime @updatedAt
-
-  username String
-  password String
-  role     Role    @default(BASIC)
-  userId   String? @unique
-
-  //relations
-  user User? @relation(fields: [userId], references: [id])
-
-  //indexes
-  @@index([email, username, role])
-}
-
-model UserInfo {
-  id String @id @default(uuid())
-
-  updatedAt DateTime @updatedAt
-
-  firstName String
-  lastName  String
-  avatarImg String
-  userId    String? @unique
-
-  //relations
-  user User? @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Cart {
@@ -63,11 +41,11 @@ model Cart {
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  status    CartStatus
+  status    CartStatus @default(PENDING)
 
   //relations
   products CartItem[]
-  user     User       @relation(fields: [id], references: [id])
+  user     User       @relation(fields: [id], references: [id], onDelete: Cascade)
 
   //index
   @@index([id])
@@ -78,16 +56,18 @@ model Cart {
 model CartItem {
   id String @id @default(uuid())
 
-  quantity   Int
+  quantity   Int @default(0)
   product_id String
   cart_id    String
 
   //relations
-  cart    Cart    @relation(fields: [cart_id], references: [id])
-  product Product @relation(fields: [product_id], references: [id])
+  cart    Cart    @relation(fields: [cart_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   //index
   @@index([id])
+
+  @@unique([product_id, cart_id])
 }
 
 model Product {
@@ -104,8 +84,8 @@ model Product {
   quantity     Int
   is_available Boolean @default(true)
 
-  category_name String @unique
-  brand_id      String
+  category_name String?
+  brand_id      String?
 
   //relations
   attributes Attributes?
@@ -115,8 +95,8 @@ model Product {
   rating    Rating[]
   cart_item CartItem[]
 
-  brand    Brand    @relation(fields: [brand_id], references: [name])
-  category Category @relation(fields: [category_name], references: [name])
+  brand    Brand?    @relation(fields: [brand_id], references: [name], onDelete: Cascade)
+  category Category? @relation(fields: [category_name], references: [name])
 
   //indexes
   @@index([id, name])
@@ -131,8 +111,9 @@ model Review {
   product_id String
 
   //relations
+  rating  Rating[]
   user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [product_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   //indexes
   @@index([id])
@@ -143,15 +124,18 @@ model Rating {
 
   rate Float
 
+  review_id String
   user_id    String
   product_id String
 
   //relations
+  review    Review    @relation(fields: [review_id], references: [id])
   user    User    @relation(fields: [user_id], references: [id])
-  product Product @relation(fields: [product_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   //block attributes
   @@unique([product_id, user_id])
+  @@unique([product_id, user_id, review_id])
   //indexes
   @@index([id])
 }
@@ -163,8 +147,8 @@ model Favorite {
   product_id String
 
   //relations
-  user    User    @relation(fields: [user_id], references: [id])
-  product Product @relation(fields: [product_id], references: [id])
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   //block attributes
   @@unique([product_id, user_id])
@@ -218,7 +202,7 @@ model Attributes {
   product_id String @unique
 
   //relations
-  product Product @relation(fields: [product_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 }
 
 //enums
