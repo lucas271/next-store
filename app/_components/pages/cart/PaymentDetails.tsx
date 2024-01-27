@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import PaymentForm from "../forms/PaymentForm";
+import PaymentForm from "../../forms/PaymentForm";
 import { BsArrowLeft } from "react-icons/bs";
 
 export default function PaymentDetails({isDetails, setIsDetails}: {isDetails: boolean, setIsDetails: Dispatch<SetStateAction<boolean>>}){
