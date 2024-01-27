@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { forwardRef } from "react";
-import CategoryItems from "../utils/CategoryItems";
+import CategoryItems from "../navbar/CategoryItems";
 import SearchBar from "../../shared/searchBar/SearchBar";
 
 export default forwardRef<HTMLElement | null, {}>((_props, ref) => {

@@ -1,6 +1,6 @@
 import Hamburguer from "../navbarHamburguer/Hamburguer";
-import CategoryItems from "../utils/CategoryItems";
-import IconLinks from "../utils/IconLinkItems";
+import CategoryItems from "./CategoryItems";
+import IconLinks from "./IconLinkItems";
 import Logo from "./Logo";
 import NavSearch from "./NavSearch";
 

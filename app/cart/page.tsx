@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { BsCart} from "react-icons/bs";
-import CartInfo from '@/app/_components/cart/CartInfo'
+import CartInfo from '@/app/_components/pages/cart/CartInfo'
 
 export default async function Cart(){
   const session = await getServerSession()
