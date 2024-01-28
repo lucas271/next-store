@@ -87,12 +87,14 @@ export const addToWishList = createAsyncThunk('wishList/AddToWishList', async (p
     try {
         const user = JSON.parse(String(localStorage.getItem('user')))
         if(!user) throw {errors: ['did not receive a user']}
+        console.log('a')
         const response = await axios.post('/api/controllers/wishList', {productId, userId: user.id || ''}).then(res => res).catch(res => {
+            console.log('b')
             throw JSON.stringify({errors: [...res.response.data]})
         })
-
+        console.log('c')
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
-
+        console.log(response.data)
         return response.data.product
     } catch (error) {
         throw new Error(String(error))
