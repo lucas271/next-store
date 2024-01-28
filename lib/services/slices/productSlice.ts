@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { error } from "console";
 import { WritableDraft } from "immer/dist/internal";
+import { getSession, useSession } from "next-auth/react";
 
 export type productSliceType = {
 
@@ -31,18 +31,17 @@ const initialState: stateType = {
 
 export const updateProduct = createAsyncThunk('product/updateProduct', async (productId: string) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
-        const cart = JSON.parse(String(localStorage.getItem('cart')))
+        const session = await getSession()
+        const user = session?.user
 
         if(!user) throw {errors: ['did not receive a user']}
 
 
-        const response = await axios.delete('/api/controllers/cart', {data: {type: 'deleteCart', userId: user.id, productId, cart: cart.id}}).then(res => res).catch(res => {
+        const response = await axios.delete('/api/controllers/cart', {data: {type: 'deleteCart', userId: user.id, productId}}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
         })
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
 
-        localStorage.removeItem('cart')
         return response.data.product
 
     } catch (error) {
@@ -54,7 +53,8 @@ export const updateProduct = createAsyncThunk('product/updateProduct', async (pr
 
 export const removeProduct = createAsyncThunk('product/removeProduct', async (productId: string) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.delete('/api/controllers/cart', {data: {type: 'deleteProductFromCart', userId: user.id, productId}}).then(res => res).catch(res => {
             console.log(res)
@@ -74,7 +74,10 @@ export const removeProduct = createAsyncThunk('product/removeProduct', async (pr
 
 export const addProduct = createAsyncThunk('product/AddProduct', async (product: productSliceType) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+
+
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.post('/api/controllers/product', {...product}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
@@ -93,6 +96,10 @@ export const addProduct = createAsyncThunk('product/AddProduct', async (product:
 
 export const getProducts = createAsyncThunk('product/getProducts', async ({limit, sortBy}: {limit?: number, sortBy?: {mostFavourites?: true}}) => {
     try {
+
+
+        
+
         const response = await axios.get('/api/controllers/product?productCredencials='+JSON.stringify({type: 'products', limit, sortBy})).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
         })

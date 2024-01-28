@@ -16,7 +16,6 @@ try {
 } 
 
 catch (error) {
-    console.log(error)
     return new Response(JSON.stringify({errors: ['erro no servidor']}), {
         status: 500,
     })}
@@ -91,7 +90,6 @@ export async function DELETE(req: NextRequest){
     } 
     
     catch (error) {
-        console.log(error)
         return new Response(JSON.stringify({errors: ['erro no servidor']}), {
             status: 500,
         })  

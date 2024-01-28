@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { WritableDraft } from "immer/dist/internal";
+import { getSession } from "next-auth/react";
 
 type rating = {
     id: string,
@@ -25,8 +26,8 @@ const initialState: stateType = {
 
 export const updateRating = createAsyncThunk('review/updateRating', async ({ratingValue, productId, ratingId}: {ratingValue: number, productId: string, ratingId: string}) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
-
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
 
 
@@ -45,7 +46,8 @@ export const updateRating = createAsyncThunk('review/updateRating', async ({rati
 
 export const removeRating = createAsyncThunk('review/removeRating', async ({productId, ratingId} : {productId: string, ratingId: string}) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.delete('/api/controllers/rating', {data: {userId: user.id, productId, ratingId}}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
@@ -65,8 +67,9 @@ export const removeRating = createAsyncThunk('review/removeRating', async ({prod
 export const addRating = createAsyncThunk('review/addRating', async ({ratingValue, productId}: {ratingValue: number, productId: string}) => {
     try {
         if(!ratingValue || !productId) throw {erros: ['didnt receive rating value or product id']}
-        const user = JSON.parse(String(localStorage.getItem('user')))
-        if(!user.id) throw {errors: ['did not receive a userId']}
+        const session = await getSession()
+        const user = session?.user
+        if(!user?.id) throw {errors: ['did not receive a userId']}
         const response = await axios.post('/api/controllers/rating', {ratingValue, productId, userId: user.id}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [res.response.data]})
         })
@@ -82,8 +85,6 @@ export const addRating = createAsyncThunk('review/addRating', async ({ratingValu
 export const getProductRatings = createAsyncThunk('reviews/getProductRatings', async (productId: string) => {
     try {
         const response = await axios.get('/api/controllers/rating?productId='+productId).then(res => res).catch(res => {
-            console.log(res)
-            console.log('b')
             throw JSON.stringify({errors: [...res.response.data]})
         })
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}

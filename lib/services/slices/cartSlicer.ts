@@ -1,8 +1,7 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { WritableDraft } from "immer/dist/internal";
-import { useAppDispatch } from "../reduxStore/storeHooks";
-import { getServerSession } from "next-auth";
+import { getSession } from "next-auth/react";
 
 type product = {
     product: {
@@ -39,7 +38,8 @@ const addLoadingToProduct = createAction<string>('addLoading')
 
 export const deleteCart = createAsyncThunk('cart/deleteCart', async (productId: string) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))        
+        const session = await getSession()
+        const user = session?.user       
 
         if(!user) throw {errors: ['did not receive a user']}
 
@@ -61,10 +61,10 @@ export const removeProduct = createAsyncThunk('cart/removeProduct', async (produ
     try {
         dispatch(addLoadingToProduct(productId))
 
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.delete('/api/controllers/cart', {data: {type: 'deleteProductFromCart', userId: user.id, productId}}).then(res => res).catch(res => {
-            console.log(res)
             throw JSON.stringify({errors: [...res.response.data]})
         })
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
@@ -72,7 +72,6 @@ export const removeProduct = createAsyncThunk('cart/removeProduct', async (produ
 
         return response.data.cart
     } catch (error) {
-        console.log(error)
         throw new Error(String(error))
 
     }
@@ -82,7 +81,8 @@ export const removeSingleProduct = createAsyncThunk('cart/removeSingleProduct', 
     try {
         dispatch(addLoadingToProduct(productId))
 
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.put('/api/controllers/cart', {type: 'deleteSingleProductFromcart', userId: user.id, productId}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
@@ -91,7 +91,6 @@ export const removeSingleProduct = createAsyncThunk('cart/removeSingleProduct', 
 
         return response.data.cart
     } catch (error) {
-        console.log(error)
         throw new Error(String(error))
 
     }
@@ -99,9 +98,9 @@ export const removeSingleProduct = createAsyncThunk('cart/removeSingleProduct', 
 
 export const addProduct = createAsyncThunk('cart/AddProduct', async (productId: string, {dispatch}) => {
     try {
-        console.log('a')
         dispatch(addLoadingToProduct(productId))
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.put('/api/controllers/cart', {type: 'addProduct', userId: user.id, productId}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
@@ -118,11 +117,8 @@ export const addProduct = createAsyncThunk('cart/AddProduct', async (productId: 
 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
     try {
-        console.log('a')
-        const user2 = await getServerSession()
-
-        console.log(user2)
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw JSON.stringify({errors: ['No user logged']})
         else{
             const response = await axios.get('/api/controllers/cart?cartCredentials='+JSON.stringify({userId: user.id})).then(res => res).catch(res => {

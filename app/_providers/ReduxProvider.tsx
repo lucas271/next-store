@@ -15,4 +15,3 @@ export default function ReduxProvider({
 
   return <Provider store={storeRef.current}>{children}</Provider>
 }
-

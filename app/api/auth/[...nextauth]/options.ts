@@ -72,11 +72,24 @@ export const options: NextAuthOptions = {
             return  baseUrl 
         },
         async jwt({token, user}){
-            return {...token, ...user}
+
+            const customUser = user as unknown as any
+
+            if(user){
+                return {
+                    ...token,
+                    ...customUser
+                }
+            }
+            return token
         },
         async session({session, token}){
-            session.user = token as any
-            return session
+            return {
+                ...session,
+                user: {
+                    ...token
+                }
+            }
         }
 
     },

@@ -101,7 +101,6 @@ class User{
     if(this.errors.length > 0) return
 
     if( !(bcrypt.compareSync(this.body.password, String(user.userCredential?.password)))) this.errors.push("Credenciais incorretas")
-    console.log('b')
     this.response = await this.prisma.user.findFirst({
       where: {
         OR: [

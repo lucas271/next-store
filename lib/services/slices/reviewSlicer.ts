@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { error } from "console";
 import { WritableDraft } from "immer/dist/internal";
 import { addRating } from "./ratingSlicer";
+import { getSession } from "next-auth/react";
 
 type review = {
     title: string,
@@ -26,7 +26,8 @@ const initialState: stateType = {
 
 export const updateReview = createAsyncThunk('review/updateReview', async ({reviewId, title, text}: {reviewId: string, title: string, text:string}) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
 
         if(!user) throw {errors: ['did not receive a user']}
 
@@ -46,7 +47,8 @@ export const updateReview = createAsyncThunk('review/updateReview', async ({revi
 
 export const removeReview = createAsyncThunk('review/removeReview', async (productId: string) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.delete('/api/controllers/review', {data: {userId: user.id, productId}}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
@@ -69,8 +71,9 @@ export const addReview = createAsyncThunk('review/addReview', async (review: rev
         if(!review.productId) throw JSON.stringify({errors: ['Avaliação Invalida, problema no productId']})
         dispatch(addRating({ratingValue: review.rating, productId: review.productId}))
 
-        const user = JSON.parse(String(localStorage.getItem('user')))
-        if(!user.id) throw {errors: ['did not receive a userId']}
+        const session = await getSession()
+        const user = session?.user
+        if(!user?.id) throw {errors: ['did not receive a userId']}
         const response = await axios.post('/api/controllers/review', {...review, userId: user.id}).then(res => res).catch(res => {
             console.log(res.response)
             throw JSON.stringify({errors: [...res.response.data]})

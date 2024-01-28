@@ -155,9 +155,8 @@ class Cart{
             id: productInCart?.id
         }
     }).then(res => res).catch(err => {
-      console.log(err)
       this.errors.push("could not delete")})
-    console.log(cartDeleted, productInCart)
+
     if(this.errors.length > 0) return
 
     this.response = productInCart
@@ -204,7 +203,6 @@ class Cart{
         return null
     })
 
-    console.log(cart)
     if(cart) {
       this.response = cart
       return cart

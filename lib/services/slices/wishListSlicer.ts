@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { WritableDraft } from "immer/dist/internal";
+import { getSession } from "next-auth/react";
 
 export type wishListProductType = {
     product: {
@@ -29,8 +30,8 @@ const initialState: stateType = {
 
 export const getWishListItem = createAsyncThunk('wishList/getWishListItem', async (productId: string) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
-
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
 
 
@@ -49,7 +50,8 @@ export const getWishListItem = createAsyncThunk('wishList/getWishListItem', asyn
 
 export const removeFromWishList = createAsyncThunk('wishList/removeFromWishList', async (wishListItemId: string) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.delete('/api/controllers/wishList', {data: {userId: user.id, wishListItemId, type: 'product'}}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
@@ -66,7 +68,8 @@ export const removeFromWishList = createAsyncThunk('wishList/removeFromWishList'
 
 export const removeAllFromWishList = createAsyncThunk('wishList/removeAllFromWishList', async () => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.delete('/api/controllers/wishList', {data: {userId: user.id, type: 'deleteAll'}}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
@@ -85,16 +88,13 @@ export const removeAllFromWishList = createAsyncThunk('wishList/removeAllFromWis
 
 export const addToWishList = createAsyncThunk('wishList/AddToWishList', async (productId: string ) => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
-        console.log('a')
         const response = await axios.post('/api/controllers/wishList', {productId, userId: user.id || ''}).then(res => res).catch(res => {
-            console.log('b')
             throw JSON.stringify({errors: [...res.response.data]})
         })
-        console.log('c')
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
-        console.log(response.data)
         return response.data.product
     } catch (error) {
         throw new Error(String(error))
@@ -105,7 +105,8 @@ export const addToWishList = createAsyncThunk('wishList/AddToWishList', async (p
 
 export const getWishListItems = createAsyncThunk('wishList/getWishListItems', async () => {
     try {
-        const user = JSON.parse(String(localStorage.getItem('user')))
+        const session = await getSession()
+        const user = session?.user
         if(!user) throw JSON.stringify({errors: ['No user logged']})
         else{
             const response = await axios.get('/api/controllers/wishList?wishListCredentials='+JSON.stringify({userId: user.id, type: 'items'})).then(res => res).catch(res => {

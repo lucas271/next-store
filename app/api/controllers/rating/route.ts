@@ -14,7 +14,6 @@ try {
     return await boilerPlateResponse(rating, rating.getRatings.bind(rating), 'rating')
 } 
 catch (error) {
-    console.log(error)
     return new Response(JSON.stringify({errors: ['erro no servidor']}), {
         status: 500,
     })}
@@ -33,7 +32,6 @@ export async function POST(req: NextRequest){
     } 
     
     catch (error) {
-        console.log(error)
         return new Response(JSON.stringify({errors: ['erro no servidor']}), {
             status: 500,
         })  }

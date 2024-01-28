@@ -43,11 +43,9 @@ class Review{
 
 
   async createNewReview(){
-    console.log('a')
     if(!this.body?.userId) return this.errors.push('need to be logged to create a review')
     if(!this.body?.productId) return this.errors.push('did not receive the reviewed product id')
     if(!this.body?.message) return this.errors.push("did not receive the message")
-    console.log('b')
     const newReview = await this.prisma.review.create({
         data: {
             userId: this.body?.userId,
@@ -55,9 +53,7 @@ class Review{
             message: this.body?.message
         }
     }).catch((error) => this.errors.push('error creating product') && console.log(error))
-    console.log('a')
     if(this.errors.length > 0) return
-    console.log(newReview)
     this.response = newReview
   }
 

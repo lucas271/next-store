@@ -64,7 +64,6 @@ class WishList{
   }
 
   async addToWishList(){
-    console.log(this.body)
 
     if(!this.body?.userId || !this.body?.productId) return this.errors.push("informations are missing")
 
@@ -80,7 +79,6 @@ class WishList{
     }).catch((error) => this.errors.push('error creating product') && console.log(error))
 
 
-    console.log(newProduct)
     if(this.errors.length > 0) return
 
     this.response = newProduct
