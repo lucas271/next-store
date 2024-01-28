@@ -98,6 +98,7 @@ export const removeSingleProduct = createAsyncThunk('cart/removeSingleProduct', 
 
 export const addProduct = createAsyncThunk('cart/AddProduct', async (productId: string, {dispatch}) => {
     try {
+        console.log('a')
         dispatch(addLoadingToProduct(productId))
         const user = JSON.parse(String(localStorage.getItem('user')))
         if(!user) throw {errors: ['did not receive a user']}
