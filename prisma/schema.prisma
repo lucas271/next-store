@@ -111,7 +111,6 @@ model Review {
   product_id String
 
   //relations
-  rating  Rating[]
   user    User    @relation(fields: [userId], references: [id])
   product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
@@ -124,18 +123,15 @@ model Rating {
 
   rate Float
 
-  review_id String
   user_id    String
   product_id String
 
   //relations
-  review    Review    @relation(fields: [review_id], references: [id])
   user    User    @relation(fields: [user_id], references: [id])
   product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   //block attributes
   @@unique([product_id, user_id])
-  @@unique([product_id, user_id, review_id])
   //indexes
   @@index([id])
 }

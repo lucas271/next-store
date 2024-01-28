@@ -30,7 +30,6 @@ class Rating{
 
   async getRatings(){
     if(!this.query?.productId) return this.errors.push('did not received the product to get the ratings for from')
-    console.log('a')
     const ratings = await this.prisma.rating.findMany({
         where: {
             product_id: this.query?.productId
