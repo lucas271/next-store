@@ -116,6 +116,7 @@ export const addProduct = createAsyncThunk('cart/AddProduct', async (productId: 
 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
     try {
+        console.log('a')
         const user = JSON.parse(String(localStorage.getItem('user')))
         if(!user) throw JSON.stringify({errors: ['No user logged']})
         else{
