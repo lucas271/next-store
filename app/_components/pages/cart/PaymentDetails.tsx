@@ -12,4 +12,4 @@ export default function PaymentDetails({isDetails, setIsDetails}: {isDetails: bo
     <PaymentForm isDetails={isDetails} setIsDetails={setIsDetails}/>
   </div>
   </>
-}
+} 

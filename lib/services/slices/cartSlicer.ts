@@ -43,7 +43,7 @@ export const deleteCart = createAsyncThunk('cart/deleteCart', async (productId: 
         if(!user) throw {errors: ['did not receive a user']}
 
 
-        const response = await axios.delete('/api/controllers/cart', {data: {type: 'deleteCart', userId: user.id, productId, cart: cart.id}}).then(res => res).catch(res => {
+        const response = await axios.delete('/api/controllers/cart', {data: {type: 'deleteCart', userId: user.id, productId}}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
         })
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
