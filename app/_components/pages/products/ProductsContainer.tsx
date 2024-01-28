@@ -24,8 +24,10 @@ export default function ProductsContainer({children, isAdmin = false}: {children
 
     return <section className="lg:w-[75%] md:w-[80%] w-[85%] grid lg:grid-cols-4  gap-y-12 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 m-auto my-2 relative flex-wrap min-h-screen-minus-nav">
         {children}
+        {JSON.stringify(products.products)}
 
         {products.products.map(product => { 
+            dispatch(addProduct(product.id || ''))
             return <div className="sm:h-[48vh] h-[40vh]" key={product.id}>
                 <div>{JSON.stringify(wishList.products.find((product) => product.product.id === product.id))}</div>
                 <Product isAdmin={isAdmin} title={product.name} price={String(product.price)} customButtomDispatchAction={ () => dispatch(addProduct(product.id || ''))} id={product.id || ''} />
