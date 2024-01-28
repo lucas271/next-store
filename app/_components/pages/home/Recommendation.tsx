@@ -28,7 +28,7 @@ export default function Recommendation(){
                         {
                             !products.loading ? products.products.slice(0, 3).map((product, index) => {
                                 return <div className={'sm:w-1/3 w-1/2 ' + (index >= 1 && 'hidden sm:block')} key={product.id}>
-                                    <Product customButtomDispatchAction={() => dispatch(addProduct(product.id || String(index)))} id={product.id || String(index)} price={String(product.price)} title={product.title}/>
+                                    <Product customButtomDispatchAction={() => dispatch(addProduct({productId: product.id || String(index)}))} id={product.id || String(index)} price={String(product.price)} title={product.title}/>
                                 </div>
 
                             }) : <div className="w-full h-full flex justify-center items-center">

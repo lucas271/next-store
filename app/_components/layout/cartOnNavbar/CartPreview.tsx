@@ -51,7 +51,7 @@ export default forwardRef<HTMLDivElement | null, {}>((_props, ref) => {
                                         -
                                     </button>
                                     <div className="w-2/4 text-center break-words">{product?.loading ? <CircularProgress size={'12px'} className="text-slate-600"/> : quantity}</div>
-                                    <button className="p-1 hover:text-slate-900 transition-all" disabled={product.loading} onClick={() => dispatch(addProduct(product.id))}>+</button>
+                                    <button className="p-1 hover:text-slate-900 transition-all" disabled={product.loading} onClick={() => dispatch(addProduct({productId: product.id}))}>+</button>
                                 </div>
                                 <div className="text-center flex flex-col sm:gap-0.5  font-bold text-sm w-[33%] md:w-[30%]">
                                     <div className="w-full text-slate-700 text-sm flex justify-center items-center gap-1"> <BsFillCreditCardFill/> 3x  de {formatPrice((Number(product.price ) * Number(quantity)) / 3)}</div>

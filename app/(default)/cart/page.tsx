@@ -8,7 +8,7 @@ export default async function Cart(){
   if(!session?.user) return redirect('/')
 
   return <>
-  <div className="w-screen h-screen-minus-nav relative overflow-x-hidden">
+  <div className="w-full h-screen-minus-nav relative overflow-x-hidden">
     {/*cart Header*/ }
     <header className="h-[7%] sm:h-[10%] flex items-center pl-2 gap-4 text-2xl border-b-2 font-bold p-1">
       <BsCart/> 

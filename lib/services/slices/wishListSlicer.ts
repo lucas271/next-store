@@ -133,7 +133,7 @@ const wishListSlicer = createSlice({
         builder.addCase(getWishListItem.rejected, (state, action): void => rejectBoilerPlate(state, action))
         builder.addCase(getWishListItem.fulfilled, (state, action): void => {
             state.loading = false
-            if(!action.payload) return state.errors.push('client did not return anything') && void 0 || void 0
+            if(!action.payload) return state.errors.push('server did not return anything') && void 0 || void 0
             state.products = action.payload
         })
 
@@ -141,7 +141,7 @@ const wishListSlicer = createSlice({
         builder.addCase(getWishListItems.rejected, (state, action): void => rejectBoilerPlate(state, action))
         builder.addCase(getWishListItems.fulfilled, (state, action): void => {
             state.loading = false
-            if(!action.payload) return state.errors.push('client did not return anything') && void 0 || void 0
+            if(!action.payload) return state.errors.push('server did not return anything') && void 0 || void 0
             state.products = action.payload
         })
 
@@ -149,7 +149,7 @@ const wishListSlicer = createSlice({
         builder.addCase(addToWishList.rejected, (state, action): void => rejectBoilerPlate(state, action))
         builder.addCase(addToWishList.fulfilled, (state, action): void => {
             state.loading = false
-            if(!action.payload) return state.errors.push('client did not return anything') && void 0 || void 0
+            if(!action.payload) return state.errors.push('server did not return anything') && void 0 || void 0
 
             state.products= [action.payload, ...state.products]
         })
@@ -159,7 +159,7 @@ const wishListSlicer = createSlice({
         builder.addCase(removeFromWishList.fulfilled, (state, action): void => {
             //I could have individual loading here, but I think it does not make as much sense as in the cart slicer, smt That I might consider later on.
             state.loading = false
-            if(!action.payload?.product?.id) return state.errors.push('client did not return anything') && void 0 || void 0
+            if(!action.payload?.product?.id) return state.errors.push('server did not return anything') && void 0 || void 0
 
             state.products = state.products.filter(product => product.product.id !== action.payload.product.id) 
 
@@ -170,8 +170,7 @@ const wishListSlicer = createSlice({
             //I could have individual loading here, but I think it does not make as much sense as in the cart slicer, smt That I might consider later on.
             state.loading = false
 
-            if(!action.payload?.product?.id) return state.errors.push('client did not return anything') && void 0 || void 0
-
+            if(!action.payload) return state.errors.push('server did not return anything') && void 0 || void 0
             state.products = []
 
         })}

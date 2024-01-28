@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { WritableDraft } from "immer/dist/internal";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 export type productSliceType = {
 
@@ -57,7 +57,6 @@ export const removeProduct = createAsyncThunk('product/removeProduct', async (pr
         const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
         const response = await axios.delete('/api/controllers/cart', {data: {type: 'deleteProductFromCart', userId: user.id, productId}}).then(res => res).catch(res => {
-            console.log(res)
             throw JSON.stringify({errors: [...res.response.data]})
         })
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
@@ -65,7 +64,6 @@ export const removeProduct = createAsyncThunk('product/removeProduct', async (pr
 
         return response.data.product
     } catch (error) {
-        console.log(error)
         throw new Error(String(error))
 
     }

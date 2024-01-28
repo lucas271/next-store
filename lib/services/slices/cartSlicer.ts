@@ -96,13 +96,13 @@ export const removeSingleProduct = createAsyncThunk('cart/removeSingleProduct', 
     }
 })
 
-export const addProduct = createAsyncThunk('cart/AddProduct', async (productId: string, {dispatch}) => {
+export const addProduct = createAsyncThunk('cart/AddProduct', async ({productId, increment}: {productId: string, increment?: number}, {dispatch}) => {
     try {
         dispatch(addLoadingToProduct(productId))
         const session = await getSession()
         const user = session?.user
         if(!user) throw {errors: ['did not receive a user']}
-        const response = await axios.put('/api/controllers/cart', {type: 'addProduct', userId: user.id, productId}).then(res => res).catch(res => {
+        const response = await axios.put('/api/controllers/cart', {type: 'addProduct', userId: user.id, productId, increment}).then(res => res).catch(res => {
             throw JSON.stringify({errors: [...res.response.data]})
         })
         if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
@@ -173,7 +173,10 @@ const cartSlice = createSlice({
                 return state.errors.push('client did not return anything') && void 0 || void 0
             }
             //no need to set product loading to false since the item itself gonna be deleted
-            if(action.payload.quantity < 1) return (state.products = state.products.filter(product => product.product.id !== action.payload.product.id)) && void 0 || void 0
+            if(action.payload.quantity <= 1) {
+                state.products = state.products.filter(product => product.product.id !== action.payload.product.id)
+                return
+            }
             const productsResponse = state.products.map(product => product.product.id === action.payload.product.id ? {product: {...product.product, loading: false}, quantity: product.quantity} : product)
             const indexOfElementToBeReplaced = productsResponse.map(product => product.product.id).indexOf(action.payload.product.id)
             productsResponse[indexOfElementToBeReplaced >= 0 ? indexOfElementToBeReplaced : productsResponse.length] = action.payload

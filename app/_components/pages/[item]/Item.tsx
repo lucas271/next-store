@@ -26,13 +26,11 @@ export default function Item(){
     const id = useParams()
     const params = useSearchParams()
 
-    console.log(params.get('id'))
 
     const [addToCartQuantity, setAddToCartQuantity] = useState<number>(1)
     const wishList = useAppSelector(state => state.wishList)
     const [isHeartFill, setIsHeartFill] = useState<boolean>()
     const rating = useAppSelector(state => state.rating)
-    console.log(id)
     useEffect(() => {
       if(!id?.item) router.push('/') 
       dispatch(getProduct(String(id?.item) || ''))
@@ -143,7 +141,7 @@ export default function Item(){
              </div>
              <div className="flex gap-1 sm:gap-2 h-2/5 font-bold justify-center items-center ">
                <StyledButton text="comprar" className='text-sm w-2/4 sm:w-2/5 p-1 sm:px-1 md:px-2'/>
-               <StyledButton text="+ carrinho" className='text-sm w-2/4 sm:w-3/5 sm:px-1 md:px-2 p-1' onClick={() => addProduct(item.product?.id || '')}/>
+               <StyledButton text="+ carrinho" className='text-sm w-2/4 sm:w-3/5 sm:px-1 md:px-2 p-1' onClick={() => dispatch(addProduct({productId:item.product?.id || '', increment:addToCartQuantity}))}/>
              </div>
  
            </div>

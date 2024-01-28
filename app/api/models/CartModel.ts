@@ -3,7 +3,8 @@ import prisma from '@/lib/prisma';
 //userId === cartId in the db
 export interface CartBodyInterface{
     productId?: string,
-    userId: string
+    userId: string,
+    increment?: number,
 }
 
 class Cart{
@@ -75,7 +76,7 @@ class Cart{
             id: existingCartItem.id,
           },
           data: {
-            quantity: existingCartItem.quantity + 1,
+            quantity: existingCartItem.quantity + (this.body?.increment || 1),
           },         
           select: {
             product: true,
