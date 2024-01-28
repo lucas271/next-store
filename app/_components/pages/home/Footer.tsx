@@ -8,8 +8,8 @@ export default function Footer(){
       <div className="flex flex-col-reverse sm:flex-row justify-evenly w-[95%] sm:w-[90%] m-auto h-full gap-6 py-12 relative">
         <div className="flex-col flex gap-4 sm:text-xl text-lg">
           <div className="w-[70%] sm:w-full m-auto sm:m-0  flex flex-col gap-3">
-            <span>Nova iguaçu, bla bla</span>
-            <span >lapmrj@gmail.com</span>
+            <span>Cidade, bla bla</span>
+            <span >gmaillala@gmail.com</span>
           </div>
           <div className="flex sm:justify-start justify-center gap-6">
               <Link href={"#"}>

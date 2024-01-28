@@ -2,6 +2,7 @@ import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { WritableDraft } from "immer/dist/internal";
 import { useAppDispatch } from "../reduxStore/storeHooks";
+import { getServerSession } from "next-auth";
 
 type product = {
     product: {
@@ -118,6 +119,9 @@ export const addProduct = createAsyncThunk('cart/AddProduct', async (productId: 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
     try {
         console.log('a')
+        const user2 = await getServerSession()
+
+        console.log(user2)
         const user = JSON.parse(String(localStorage.getItem('user')))
         if(!user) throw JSON.stringify({errors: ['No user logged']})
         else{
