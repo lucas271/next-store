@@ -8,8 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { reviewUpdateValidationType, reviewUpdateValidation } from "@/util/reviewValidation";
 import { useDispatch } from "react-redux";
 import { updateReview } from "@/lib/services/slices/reviewSlicer";
+import { useSession } from "next-auth/react";
 
-export default  function Comment({title, text, userId, id}: {title: string, text: string, userId: string, id: string}){
+export default  function Comment({title, text, userId}: {title: string, text: string, userId: string, id: string}){
 
     const [isEdit, setIsEdit] = useState<boolean>()
     const dispatch = useDispatch()
@@ -18,6 +19,9 @@ export default  function Comment({title, text, userId, id}: {title: string, text
         resolver: zodResolver(reviewUpdateValidation),
     })
 
+    const session = useSession()
+
+    console.log(session.data?.user)
 
     return <>
         <div className="w-full  p-8 relative m-auto bg-slate-100 rounded-lg overflow-auto whitespace-break-spaces">
@@ -25,10 +29,10 @@ export default  function Comment({title, text, userId, id}: {title: string, text
                 <div className="text-yellow-300">
                     <BsStarFill />
                 </div>
-                {<div className="flex gap-4 items-center ">
+                {/* && <div className="flex gap-4 items-center ">
                     {<BsPenFill className="hover:text-slate-800 transition cursor-pointer" onClick={() => setIsEdit(true)}/>}
                     <MdClose className="hover:text-slate-800 transition cursor-pointer" onClick={() => setIsEdit(false)}/>
-                </div>}
+                </div>*/}
             </div>
             <div className="flex flex-col gap-3">
                 <span className="text-sm text-slate-500 mt-2">{'anonymous user'}</span>

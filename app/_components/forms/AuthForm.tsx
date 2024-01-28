@@ -54,8 +54,7 @@ export default function AuthForm({isSignIn}: {isSignIn: boolean}){
               </>
               }
             </div>
-            <StyledButton text={isSignIn ? 'Entrar': 'Criar'}/>
-            <button className='mt-64' onClick={() => signOut()}>sair</button>
+            <StyledButton text={isSignIn ? 'Entrar': 'Criar'} className={'p-2'}/>
       </form>
     </>
     }

@@ -91,7 +91,9 @@ return <>
           />
           {isHamburguer ? 'Entrar': ''}
       </Link>:
-      <span className="hover:text-gray-700 h-full w-full" onClick={() => signOut({callbackUrl: '/'})}>                     
+      <span className="hover:text-gray-700 h-full w-full" onClick={() => {
+          signOut({callbackUrl: '/'})
+        }}>                     
           <BiExit
           className={`cursor-pointer transition duration-200 sm:inline ${isHamburguer && 'absolute'} h-full top-0`}
           aria-label='Logout'
