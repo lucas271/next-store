@@ -10,53 +10,61 @@ import ErrorMessage from "../shared/errorMessage/ErrorMessage";
 import {  registerUser } from "@/lib/services/slices/userSlicer";
 import { useAppDispatch, useAppSelector } from "@/lib/services/reduxStore/storeHooks";
 import { CircularProgress } from "@mui/material";
-import { signIn, signOut, } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function AuthForm({isSignIn}: {isSignIn: boolean}){
-  const user = useAppSelector(state => state.user)
-  const dispatch = useAppDispatch()
+	const user = useAppSelector(state => state.user)
+	const dispatch = useAppDispatch()
+	const router = useRouter()
+	const [nextAuthErrors, setNextAuthErrors] = useState<string[]>([]) 
 
   type AuthType = typeof isSignIn extends true ? SignInType : SignUpType
   const {register, handleSubmit, formState: {errors}} = useForm<AuthType>({
-    resolver: zodResolver(isSignIn ? signInValidation : signUpValidation),
+  	resolver: zodResolver(isSignIn ? signInValidation : signUpValidation),
   })
 
   const validate = async (data: AuthType) => {
-    if(!isSignIn){
-      dispatch(registerUser(data))
-    }else{
-      signIn('credentials', {
-        ...data
-      })
-    }
+  	if(!isSignIn){
+  		dispatch(registerUser(data))
+  	}else{
+  		await signIn('credentials', {
+  			...data, redirect: false
+  		}).then((response) => {
+  			if(response?.ok) return router.push('/')
+  			const errorParsed: string[] = JSON.parse(String(response?.error)) || ['Não foi possivel entrar na conta :(']
+  			setNextAuthErrors(errorParsed)
+  		})
+  	}
   }
 
   return <>
-    {user.loading ? <div className="w-full flex align-middle justify-center"><CircularProgress size={'10vh'}/></div> :<>
-      <form action="" onSubmit={handleSubmit(validate)} className=" mt-4 flex flex-col gap-6 ">
-            <div className="space-y-2 w-full">
-              {user.errors.map((error, index) => {
-                return <h1 key={index}><ErrorMessage message={error}/></h1>
-              })}
-              {errors.email?.message && <ErrorMessage message={errors.email.message}/>}
-              <StyledInput id="email" Icon={AiOutlineMail} register={register} name="email" placeholder="Email"/>
+  	{user.loading ? <div className="w-full flex align-middle justify-center"><CircularProgress size={'10vh'}/></div> :<>
+  		<form action="" onSubmit={handleSubmit(validate)} className=" mt-4 flex flex-col gap-6 ">
+  			<div className="space-y-2 w-full">
+  				{[...user.errors, ...nextAuthErrors].map((error, index) => {
+  					return <span key={index}><ErrorMessage message={error}/></span>
+  				})}
+  				{errors.email?.message && <ErrorMessage message={errors.email.message}/>}
+  				<StyledInput id="email" Icon={AiOutlineMail} register={register} name="email" placeholder="Email"/>
               
-              { !isSignIn && <>               
-                  {errors.name?.message && <ErrorMessage message={errors.name.message}/>}
-                  <StyledInput id="username" Icon={BsPersonCircle} register={register} name="name" placeholder="Nome de usuario"/>
-              </>}
+  				{ !isSignIn && <>               
+  					{errors.name?.message && <ErrorMessage message={errors.name.message}/>}
+  					<StyledInput id="username" Icon={BsPersonCircle} register={register} name="name" placeholder="Nome de usuario"/>
+  				</>}
 
-              {errors.password?.message && <ErrorMessage message={errors.password.message}/>}
-              <StyledInput type="password" id="password" Icon={BsLock} register={register} name="password" placeholder="Senha"/>
-              {!isSignIn &&<>
-                {errors.repeatPassword?.message && <ErrorMessage message={errors.repeatPassword.message}/>}
-                <StyledInput type="password" id="repeatPassword" Icon={BsLock} register={register} name="repeatPassword" placeholder="Repetir a senha"/>
-              </>
-              }
-            </div>
-            <StyledButton text={isSignIn ? 'Entrar': 'Criar'} className={'p-2'}/>
-      </form>
-    </>
-    }
+  				{errors.password?.message && <ErrorMessage message={errors.password.message}/>}
+  				<StyledInput type="password" id="password" Icon={BsLock} register={register} name="password" placeholder="Senha"/>
+  				{!isSignIn &&<>
+  					{errors.repeatPassword?.message && <ErrorMessage message={errors.repeatPassword.message}/>}
+  					<StyledInput type="password" id="repeatPassword" Icon={BsLock} register={register} name="repeatPassword" placeholder="Repetir a senha"/>
+  				</>
+  				}
+  			</div>
+  			<StyledButton text={isSignIn ? 'Entrar': 'Criar'} className={'p-2'}/>
+  		</form>
+  	</>
+  	}
   </>
 }

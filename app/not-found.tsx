@@ -6,21 +6,21 @@ import FooterNavbar from "./_components/layout/footerNavbar/FooterNavbar";
 import Navbar from "./_components/layout/navbar/Navbar";
 
 export default function NotFound() {
-    return (
-      <>
-        <Navbar/>
-        <div className="w-full h-full flex justify-center items-center min-h-screen-minus-nav">
-          <article className="text-3xl text-slate-700 transition-all flex sm:flex-row flex-col justify-center items-center gap-3">
-            <BiSad/>
-            <div className="flex justify-center items-center flex-col gap-1 text-center">
-              <h2>Não Encontrada 404</h2>
-              <p className="text-slate-400 text-xl"><StyledButton text="voltar para pagina inicial" className={'p-2'}/></p>
-            </div>
+	return (
+		<>
+			<Navbar/>
+			<div className="w-full h-full flex justify-center items-center min-h-screen-minus-nav">
+				<article className="text-3xl text-slate-700 transition-all flex sm:flex-row flex-col justify-center items-center gap-3">
+					<BiSad/>
+					<div className="flex justify-center items-center flex-col gap-1 text-center">
+						<h2>Não Encontrada 404</h2>
+						<p className="text-slate-400 text-xl"><Link href={'/'}><StyledButton text="voltar para pagina inicial" className={'p-2'}/></Link></p>
+					</div>
 
-          </article>
+				</article>
 
-        </div>
-        <FooterNavbar/>
-      </>
-    )
-  }
+			</div>
+			<FooterNavbar/>
+		</>
+	)
+}

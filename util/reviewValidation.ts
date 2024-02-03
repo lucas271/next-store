@@ -1,10 +1,9 @@
 import { z } from "zod";
 
-export const reviewUpdateValidation = z.object({
-    title:  z.string().min(1,"Review precisa ter um titulo"),
+export const reviewValidation = z.object({
     text:  z.string().min(1,"Review precisa ter um texto"),
-    rating: z.number().min(0.5, "valor minimo para review deve ser 0.5").optional()
+    rating: z.string().optional()
 })
 
 
-export type reviewUpdateValidationType = z.infer<typeof reviewUpdateValidation>
+export type reviewValidationType = z.infer<typeof reviewValidation>

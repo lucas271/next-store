@@ -7,7 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
+model User { 
   name  String 
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -24,6 +24,7 @@ model User {
 
   //indexex
   @@index([id, email])
+  @@unique([id, name])
 }
 
 //user related models
@@ -105,17 +106,21 @@ model Product {
 //product and user related models
 model Review {
   id String @id @default(uuid())
+  userName String
 
   message    String
-  userId     String
+  userId     String 
   product_id String
 
   //relations
-  user    User    @relation(fields: [userId], references: [id])
+  //review does not need to be attached with a rating
+  Rating Rating? 
+  user    User    @relation(fields: [userId, userName], references: [id, name], onDelete: Cascade) 
   product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   //indexes
   @@index([id])
+  @@unique([userId, product_id])
 }
 
 model Rating {
@@ -125,9 +130,14 @@ model Rating {
 
   user_id    String
   product_id String
+  review_id String @unique
+  //rating need to be attached with a review
+
+
 
   //relations
-  user    User    @relation(fields: [user_id], references: [id])
+  review Review @relation(fields: [review_id], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   //block attributes
