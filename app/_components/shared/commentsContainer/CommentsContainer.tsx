@@ -29,9 +29,14 @@ export default function CommentsContainer({productId} : {productId?: string}){
 
             
 			</> : <>
-				{!session.data?.user  ? <div className="mb-6 rounded-lg bg-slate-200 text-slate-500 p-3 sm:w-fit break-words">
+				{!session.data?.user ? 
+				<div className="mb-6 rounded-lg bg-slate-200 text-slate-500 p-3 sm:w-fit break-words">
                         Voce precisa estar logado para comentar: <StyledButton text='entre' className={'sm:ml-6 p-2 px-8 text-slate-700 bg-slate-200'}/> 
-				</div> : !review.reviews.find(review => review.userId === session.data?.user?.id) ? <CommentForm productId={productId || ''} />: <div className="flex flex-col gap-3">
+				</div> 
+				: 
+				!review.reviews.find(review => review.userId === session.data?.user?.id) ? <CommentForm productId={productId || ''} />
+				: 
+				<div className="flex flex-col gap-3">
 					{review.reviews.filter(comment => comment.userId === session.data?.user?.id).map(comment => {
 						if (comment.userId !== session.data.user.id) return <> </>
 						return <div className="bg-slate-800 p-3 rounded-xl mb-12" key={comment.id + '1'}>
@@ -66,15 +71,10 @@ export default function CommentsContainer({productId} : {productId?: string}){
 								</div>
 							</div>
 					}
-                    
 				</div>
             
 			</>}
-
-
-
 		</section>
-    
 	</>
 }
 

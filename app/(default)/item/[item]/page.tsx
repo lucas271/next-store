@@ -1,13 +1,14 @@
 "use client"
 
-
 import Item from "@/app/_components/pages/[item]/Item"
-import CommentsContainer from "@/app/_components/shared/commentsContainer/CommentsContainer";
 import { useAppDispatch, useAppSelector } from "@/lib/services/reduxStore/storeHooks";
 import { getProduct } from "@/lib/services/slices/productSlice";
 import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
+
+const CommentsContainerComponent = dynamic(() => import("@/app/_components/shared/commentsContainer/CommentsContainer"), {ssr: false})
 
 export default function ItemContainer(){
 	const id = useParams()
@@ -20,8 +21,6 @@ export default function ItemContainer(){
 	}, [dispatch, id?.item])
 
 	useEffect(() => {
-
-  
 		if(item.product === undefined){
 			router.push('/notfound')
 		}
@@ -38,7 +37,7 @@ export default function ItemContainer(){
 				</div>
 			</main>
 			<footer>
-				<CommentsContainer productId={String(id?.item)}/>
+				<CommentsContainerComponent productId={String(id?.item)}/>
 			</footer>
     
 		</>

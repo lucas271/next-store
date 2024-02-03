@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/lib/services/reduxStore/storeHooks"
 import { addToWishList, getWishListItems, removeFromWishList } from "@/lib/services/slices/wishListSlicer"
+import { getSession, useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { BsHeart, BsHeartFill, BsHeartbreakFill } from "react-icons/bs"
 
@@ -12,6 +13,7 @@ const HeartIcon = ({id, className="absolute top-1 sm:top-4 right-2 sm:right-4", 
 
 	const wishList = useAppSelector(state => state.wishList)
 	const [isHeartFill, setIsHeartFill] = useState<boolean>()
+	const {data: session} = useSession()
 
 	useEffect(() => {
 		isGetWishListItems && dispatch(getWishListItems())
@@ -37,7 +39,8 @@ const HeartIcon = ({id, className="absolute top-1 sm:top-4 right-2 sm:right-4", 
 		setIsHeartFill(!isHeartFill)
 		dispatch(addToWishList(id))
 	}
-
+	
+	if(!session?.user.id) return <></>
 	return <>
 		<span className={`${className} z-40 transition-all group/heart cursor-pointer ${!isHeartFill ? wishList.loading ? 'text-red-300' : 'text-red-400' : wishList.loading ? 'text-red-700' : 'text-red-800' }`} onClick={!wishList.loading ? handleIconHeartClick : () => void 0}> 
 			<BsHeart className={ `transition-all  ${!isHeartFill ? 'inline-block group-hover/heart:hidden': 'hidden'}`}/>

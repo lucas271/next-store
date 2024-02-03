@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import Banner from '../_components/pages/home/Banner'
+import ReduxProvider from '../_providers/ReduxProvider'
 
 
 const RecommendationComponent = dynamic(() => import('@/app/_components/pages/home/Recommendation'))
@@ -10,7 +11,9 @@ export default async function Home() {
 		<main className=" font-def3">
 			<Banner/>
 			<CarrouselComponent/>
-			<RecommendationComponent/>
+			<ReduxProvider>
+				<RecommendationComponent/>
+			</ReduxProvider>
 		</main>
 	)
 }
