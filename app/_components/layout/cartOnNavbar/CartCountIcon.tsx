@@ -11,11 +11,14 @@ export default function CartCountIcon({className}: {className: string}){
 
 	useEffect(() => {
 		cart.products.length === 0 && dispatch(getCart())
-	}, [])
+	}, [cart.products.length, dispatch])
 
 	return <>
 		<span className={" bg-slate-100 text-slate-800 flex items-center justify-center   rounded-full absolute " +className}>
-			{cart.loading ? <div className="w-100 flex align-middle justify-center"><CircularProgress size={'12px'} className="text-slate-600"/></div>  : <>
+			{cart.loading ? <div className="w-100 flex align-middle justify-center"><CircularProgress size={'12px'} className="text-slate-600"/></div>  : 
+			cart.errors.length > 0 ? <span className="text-red-800">
+				!
+			</span>:<>
 				{cart.products.reduce((pv, cv) => { return {quantity: pv.quantity + cv.quantity}}, {quantity: 0}).quantity}
 			</>}
 		</span>

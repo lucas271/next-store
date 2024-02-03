@@ -107,7 +107,6 @@ export const getWishListItems = createAsyncThunk('wishList/getWishListItems', as
 	try {
 		const session = await getSession()
 		const user = session?.user
-		console.log(session)
 
 		if(!user) throw JSON.stringify({errors: ['No user logged']})
 		else{

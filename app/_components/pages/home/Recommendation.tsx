@@ -32,7 +32,7 @@ export default function Recommendation(){
 							</div>
 
 						}) : <div className="w-full h-full flex justify-center items-center">
-							<CircularProgress size={'5vh'}/>
+							<CircularProgress property="" size={'5vh'}/>
 						</div>
 					}
 				</div>

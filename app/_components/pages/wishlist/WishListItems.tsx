@@ -1,6 +1,6 @@
 "use client"
 
-import { BsStar, BsStarFill, BsTrash } from "react-icons/bs"
+import { BsTrash } from "react-icons/bs"
 import StyledButton from "../../shared/styledButton/StyledButton"
 import Image from 'next/image'
 import { useAppDispatch, useAppSelector } from "@/lib/services/reduxStore/storeHooks"
@@ -65,7 +65,7 @@ const WishListItems = () => {
 										</div>
 
 										<div className="w-full h-2/6 flex flex-col gap-2 shrink"> 
-											<StyledButton text="+ Carrinho" className={'w-full sm:p-2 p-0.5'} onClick={() => dispatch(addProduct({productId: product.id}))}/>
+											<StyledButton text="+ Carrinho" className={'w-full sm:p-2 p-0.5'} onClick={() => dispatch(addProduct({productId: product.product?.id|| ''}))}/>
 											<StyledButton text="Ver mais" className={'w-full sm:p-2 p-0.5'} onClick={() => router.push('/item/'+product.id)}/>
 										</div>
 									</div>

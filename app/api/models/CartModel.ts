@@ -83,7 +83,7 @@ class Cart{
 					quantity: true,
 					product_id: true,
 				}
-			}).catch(() => this.errors.push('unable to add new cart Item'));
+			}).catch((err) => this.errors.push('unable to add new cart Item') && console.log(err));
 			if(this.errors.length > 0) return
 			this.response = cartItem
 		} else {
@@ -99,7 +99,7 @@ class Cart{
 					quantity: true,
 					product_id: true,
 				}
-			}).catch(() => this.errors.push('unable to create new cart Item'));
+			}).catch((err) => this.errors.push('unable to create new cart Item'));
 			if(this.errors.length > 0) return
 
 			this.response = cartItem

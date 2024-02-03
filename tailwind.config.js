@@ -43,8 +43,8 @@ module.exports = {
 				},
 				SlideOff: {
 					"0%": {transform: 'translateX(0%)'},
-					"99%": {transform: 'translateX(-100%)'},
-					"100%": {display: 'none'}
+					"99%": {transform: 'translateX(-99%)'},
+					"100%": {display: 'none', transform: 'translateX(-100%)'}
 				},
 				SlideInOpposite: {
 					"0%": {transform: 'translateX(-100%)'},

@@ -13,6 +13,7 @@ import Image from 'next/image'
 import { BiSad } from "react-icons/bi"
 import formatPrice from "@/util/formatPrice"
 import { CircularProgress } from "@mui/material"
+import ErrorMessage from "../../shared/errorMessage/ErrorMessage"
 
 export default forwardRef<HTMLDivElement | null, {}>((_props, ref) => {
 	const cart = useAppSelector(state => state.cart)
@@ -21,7 +22,7 @@ export default forwardRef<HTMLDivElement | null, {}>((_props, ref) => {
 
 
 	return <>
-    
+
 		<div ref={ref} className=" animate-slide-in-from-top   rounded-md shadow-md  fixed flex justify-between flex-col bg-slate-50 lg:w-[50vw] md:w-[65vw] sm:w-[75vw] sm:h-[50vh] md:h-[45vh] lg:h-[42.5vh]  md:p-5 sm:p-2 right-4 top-20 z-50">
 			<header className="p-3">
 				<h3 className="text-2xl font-bold">Carrinho</h3>
@@ -36,7 +37,11 @@ export default forwardRef<HTMLDivElement | null, {}>((_props, ref) => {
 				</span>
 			</>  : <>
 				<ul className="flex-grow flex-shrink w-full flex flex-col gap-8 list-none overflow-auto">
-            
+					{cart.errors.length > 0 ? cart.errors.map((errMsg) => {
+						return <>
+							<ErrorMessage message={errMsg} className="bg-slate-200 rounded-lg p-4 my-4"/>
+						</>
+					}): ''}
 					{cart.products.map(({product, quantity}) => {
 						return <li className="flex h-4/6 justify-center items-center w-full gap-3" key={product.id}>
 							<div className=" w-[20%] relative h-full">

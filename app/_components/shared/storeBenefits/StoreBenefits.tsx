@@ -33,7 +33,7 @@ export default function StoreBenefits(){
 					<BsCreditCardFill className={"sm:text-xl  md:text-3xl text-3xl"}/>
 
 					<div className="text-sm uppercase">
-						<h4 className=""> 3 X SEM JUROS </h4>
+						<h3 className=""> 3 X SEM JUROS </h3>
 						<p className="font-bold"> Nas principais bandeiras </p>
 					</div>
 				</div>
@@ -43,7 +43,7 @@ export default function StoreBenefits(){
 					<RiTruckFill className="sm:text-xl  md:text-3xl text-3xl"/>
 
 					<div className="text-sm uppercase">
-						<h4 className="">Entrega Garantida </h4>
+						<h3 className="">Entrega Garantida </h3>
 						<p className="font-bold">Em todo Brasil</p>
 					</div>
 				</div>
@@ -54,7 +54,7 @@ export default function StoreBenefits(){
 					<MdPix className="sm:text-xl  md:text-3xl text-3xl"/>
 
 					<div className="text-sm uppercase">
-						<h4 className=""> 4% de desconto </h4>
+						<h3 className=""> 4% de desconto </h3>
 						<p className="font-bold">No pix</p>
 					</div>
 				</div>
