@@ -8,6 +8,7 @@ export default withAuth(
 function middleware(req: NextRequestWithAuth){
     if(req.nextUrl.pathname.includes("/api/controllers") && req.method === 'GET') return NextResponse.next()
     const token = req.nextauth.token
+    console.log(token)
     
     if((req.nextUrl.pathname.includes('/signIn') || req.nextUrl.pathname.includes('/signUp')) && token ) return NextResponse.rewrite(new URL('/notFound', req.url))
 
@@ -16,7 +17,6 @@ function middleware(req: NextRequestWithAuth){
     const isPostMethod = req.method === 'POST'
     const isUserAdmin = token?.role === 'ADMIN'
     const isAdminPath = req.nextUrl.pathname.includes('/admin') ? true : false
-
     
     if(isAdminPath && !isUserAdmin) return NextResponse.rewrite(new URL('/notFound', req.url))
     if(req.nextUrl.pathname.includes('/wishList') && !token)  return NextResponse.rewrite(new URL('/notFound', req.url))
