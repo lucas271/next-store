@@ -1,17 +1,14 @@
 import type { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import User from '../../models/UserModel'
-import { Provider } from 'react-redux'
-
-
+import User from '../../_models/UserModel'
 
 export const options: NextAuthOptions = {
 	pages: {
 		signIn: '/signIn',
 	},
-	jwt: {
-		maxAge: 60 * 60 * 24 * 30,
+	session: {
+		strategy: 'jwt'
 	},
 	providers: [
 		GoogleProvider({
@@ -28,7 +25,7 @@ export const options: NextAuthOptions = {
 			async authorize(credentials) {
 				if(!credentials?.email || !credentials.password) throw new Error(JSON.stringify({errors: ['erro no servidor']}))
 				const user = new User(credentials)
-				await user.loginUser().catch(() => {throw new Error(JSON.stringify({errors: ['erro no servidor']}))})
+				await user.handleProviderCredentials().catch(() => {throw new Error(JSON.stringify({errors: ['erro no servidor']}))})
 				if(user.errors.length > 0) throw new Error(JSON.stringify({errors: [...user.errors]}))
 				if(user.response) return user.response
 				else{

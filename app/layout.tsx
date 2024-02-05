@@ -28,7 +28,7 @@ export default function RootLayout({
 
 			<AuthProvider>
 				<ReduxProvider>   
-					<body className={`${roboto.variable} font-wdc pb-[8vh] sm:pb-[0vh]`} style={{minHeight: '100vh'}}>
+					<body className={`${roboto.variable} font-wdc`}>
 						<NextTopLoader color='black' height={12}/>
 						{children}
 					</body>

@@ -8,7 +8,7 @@ const CarrouselComponent = dynamic(() => import("@/app/_components/pages/home/Ca
 
 export default async function Home() {
 	return (
-		<main className=" font-def3">
+		<main className=" font-def3 pb-[8vh] sm:pb-[0vh] min-h-screen">
 			<Banner/>
 			<CarrouselComponent/>
 			<ReduxProvider>

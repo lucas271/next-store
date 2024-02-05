@@ -1,13 +1,8 @@
 import WishListCleanALL from "@/app/_components/pages/wishlist/WishListCleanAll"
 import WishListItems from "@/app/_components/pages/wishlist/WishListItems"
-import { getServerSession } from "next-auth"
-import { redirect } from "next/navigation"
 import { BsHeart } from "react-icons/bs"
 
-const WishList = async () => {
-	const session = await getServerSession()
-	if(!session?.user) return redirect('/')
-  
+const WishList =() => {
 	return <>
 		<div className="min-h-screen-minus-nav relative flex flex-col">
 			<header className="w-full h-[8vh] border-b-2 px-4 flex items-center justify-between text-gray-700">

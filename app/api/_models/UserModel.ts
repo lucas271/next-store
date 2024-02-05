@@ -48,6 +48,43 @@ class User{
 		return this.response =  user
 	}
 
+	public async handleProviderCredentials(){
+		const isUser = await this.getUserCredentials()
+		if(isUser) {
+			this.validateUser()
+		
+			if( !(bcrypt.compareSync(this.body.password, String(isUser.userCredential?.password)))) this.errors.push("Credenciais incorretas")
+			return this.response = await this.prisma.user.findFirst({
+				where: {
+					OR: [
+						{id: this.body.id},
+						{email: this.body.email}
+					]
+				}
+			})  
+		}else{
+			await this.validateUser(true)
+			const user = await this.prisma.user.create({
+				data: {
+					name: this.body.name,
+					email: this.body.email,
+					image: this.body.profilePic,
+					userCredential: {
+						create: {
+							password: bcrypt.hashSync(this.body.password, 6)
+						}
+					}
+				}
+			}).catch(() => {
+				this.errors.push('error creating user')}
+			)
+			if(this.errors.length > 0) return
+			this.response = user
+			return this.response =  user
+		}
+
+	}
+
 	public async createUser(){
 		await this.validateUser(true)
 		if(this.errors.length > 0) return

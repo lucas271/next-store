@@ -41,12 +41,15 @@ export const loginUser = createAsyncThunk('auth/login', async (data: SignInType)
 
 export const registerUser = createAsyncThunk('auth/register', async (data: SignUpType) => {
 	try {
+		console.log(data)
 		const response = await axios.post('/api/controllers/user', {...data}).then(res => res).catch(res => {
+			console.log(res.response.data)
 			throw JSON.stringify({errors: [...res.response.data.errors]})
 		})
+		console.log('a')
 		if(response.data.errors?.length > 0) throw JSON.stringify({errors: [...response.data.errors]})
+		console.log('b')
 		const user = response.data.user
-		localStorage.setItem('user', JSON.stringify(user))
 		return {...user, password: data.password}
 	} catch (error) {
 		throw new Error(String(error))

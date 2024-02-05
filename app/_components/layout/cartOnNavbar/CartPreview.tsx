@@ -44,7 +44,7 @@ export default forwardRef<HTMLDivElement | null, {}>((_props, ref) => {
 					}): ''}
 					{cart.products.map(({product, quantity}) => {
 						return <li className="flex h-4/6 justify-center items-center w-full gap-3" key={product.id}>
-							<div className=" w-[20%] relative h-full">
+							<div className=" w-[20%] relative h-full ">
 								<Image src={'/'+ product.img} alt="bottle" fill sizes="100%"/>
 							</div>
 							<article className="w-[25%] sm:w-[23%] h-full relative flex flex-col gap-2 justify-center ">

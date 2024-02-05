@@ -2,14 +2,12 @@
 
 import AddProductForm from "@/app/_components/forms/ProductForm"
 import ProductsContainer from "@/app/_components/pages/products/ProductsContainer"
-import { useAppDispatch } from "@/lib/services/reduxStore/storeHooks"
 import { useState } from "react"
 import { IoMdArrowBack } from "react-icons/io"
 import { MdAdd } from "react-icons/md"
 
 const ItemAdmin = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const dispatch = useAppDispatch()
 
 	return <>
 		<ProductsContainer isAdmin={true}>

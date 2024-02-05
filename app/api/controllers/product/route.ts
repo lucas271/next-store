@@ -1,7 +1,6 @@
 import { NextRequest } from 'next/server'
-import Product, { ProductBodyInterface, ProductQueryInterface } from "../../models/ProductModel";
+import Product, { ProductBodyInterface, ProductQueryInterface } from "../../_models/ProductModel";
 import { boilerPlateResponse } from '../util/boilerPlateResponse';
-import { Console } from 'console';
 
 export async function GET(req: NextRequest){
 	try {

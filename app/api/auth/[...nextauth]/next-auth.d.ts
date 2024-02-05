@@ -1,4 +1,5 @@
 import NextAuth, { DefaultSession } from "next-auth"
+import { DefaultJWT } from "next-auth/jwt"
 
 declare module "next-auth" {
   /**
@@ -7,7 +8,13 @@ declare module "next-auth" {
   interface Session {
     user: {
       /** The user's postal address. */
-      id: string
+      id: string,
+      role: 'ADMIN' | 'BASIC'
     } & DefaultSession["user"]
+  }
+}
+declare module "next-auth/jwt"{
+  interface JWT extends DefaultJWT{
+    role: 'ADMIN' | 'BASIC'
   }
 }

@@ -1,8 +1,6 @@
 import { NextRequest } from 'next/server'
-import Cart, { CartBodyInterface } from '../../models/CartModel'
+import Cart, { CartBodyInterface } from '../../_models/CartModel'
 import { boilerPlateResponse } from '../util/boilerPlateResponse'
-import { getServerSession } from 'next-auth'
-import { options } from '../../auth/[...nextauth]/options'
 
 export async function GET(req: NextRequest){
 	try {

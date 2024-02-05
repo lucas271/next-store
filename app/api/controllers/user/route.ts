@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import User, { UserBodyInterface } from "../../models/UserModel";
+import User, { UserBodyInterface } from "../../_models/UserModel";
 import { signIn } from 'next-auth/react';
 import { boilerPlateResponse } from '../util/boilerPlateResponse';
 
@@ -32,13 +32,6 @@ export async function POST(req: NextRequest){
 		await user.createUser()
 		if(user.errors.length > 0) return new Response(JSON.stringify({errors: user.errors}), {
 			status: 404,
-		})
-
-		signIn('credentials', {
-			redirect: false,
-			email: user.response?.email,
-			name: user.response?.name,
-			password: body.password
 		})
 
 		return new Response(JSON.stringify({user: user.response}), {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { boilerPlateResponse } from '../util/boilerPlateResponse';
-import WishList, { WishListBodyInterface, WishListQueryInterface } from '../../models/WishListModel';
+import WishList, { WishListBodyInterface, WishListQueryInterface } from '../../_models/WishListModel';
 import { Console } from 'console';
 import { getServerSession } from 'next-auth';
 import { options } from '../../auth/[...nextauth]/options';
