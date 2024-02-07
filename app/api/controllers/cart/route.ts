@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import Cart, { CartBodyInterface } from '../../_models/CartModel'
-import { boilerPlateResponse } from '../util/boilerPlateResponse'
+import { boilerPlateResponse } from '../_util/boilerPlateResponse'
 
 export async function GET(req: NextRequest){
 	try {

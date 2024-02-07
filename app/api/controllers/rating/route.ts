@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { boilerPlateResponse } from '../util/boilerPlateResponse';
+import { boilerPlateResponse } from '../_util/boilerPlateResponse';
 import Rating, { RatingBodyInterface,  } from '../../_models/RatingModel';
 
 export async function GET(req: NextRequest){

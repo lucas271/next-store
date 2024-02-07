@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import User, { UserBodyInterface } from "../../_models/UserModel";
 import { signIn } from 'next-auth/react';
-import { boilerPlateResponse } from '../util/boilerPlateResponse';
+import { boilerPlateResponse } from '../_util/boilerPlateResponse';
 
 export async function GET(req: NextRequest){
 	try {
