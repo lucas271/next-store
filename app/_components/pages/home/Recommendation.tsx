@@ -22,12 +22,12 @@ export default function Recommendation(){
 	return <>
 		<div className='h-screen-minus-nav flex flex-col'>
 			<StoreBenefits/>
-			<div className='grow shrink w-full flex flex-col justify-evenly items-center'>
+			<div className='grow shrink w-full flex flex-col justify-evenly items-center relative'>
 				<h2 className='text-xl font-bold'>Recomendações</h2>
-				<div className='w-full md:w-4/6 flex sm:gap-6 gap-2 justify-center'>
+				<div className=' w-full cu md:w-4/6 flex sm:gap-6 gap-2 justify-center h-3/4 sm:h-2/3'>
 					{
 						!products.loading ? products.products.slice(0, 3).map((product, index) => {
-							return <div className={'sm:w-1/3 w-1/2 ' + (index >= 1 && 'hidden sm:block')} key={product.id}>
+							return <div className={'sm:w-1/3 w-2/3 h-full ' + (index >= 1 && 'hidden sm:block')} key={product.id}>
 								<Product customButtomDispatchAction={() => dispatch(addProduct({productId: product.id || String(index)}))} id={product.id || String(index)} price={String(product.price)} title={product.title}/>
 							</div>
 

@@ -6,7 +6,7 @@ import { BsHeart, BsHeartFill, BsHeartbreakFill } from "react-icons/bs"
 
 //allow custom className while defining default className.
 //If className is defined as a prop in the parent component, all it's default styles are not included.
-const HeartIcon = ({id, className="absolute top-1 sm:top-4 right-2 sm:right-4", isGetWishListItems=false}:{id: string, className?: string, isGetWishListItems?: boolean}) => {
+const HeartIcon = ({id, className="absolute top-1 sm:top-4 right-3 sm:right-4", isGetWishListItems=false}:{id: string, className?: string, isGetWishListItems?: boolean}) => {
 	//isGetWishListItems has the porpuse of trying to avoid duplication of dispatches (mainly getWishListItems duplication).
 
 	const dispatch = useAppDispatch()

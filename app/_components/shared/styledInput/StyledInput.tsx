@@ -11,13 +11,12 @@ interface InputProps {
   size?: string;
   value?: string;
   register?: UseFormRegister<any>
-  setValue?: Dispatch<SetStateAction<string>>
   name?: string,
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void | Promise<void>,
+  onChange?: Dispatch<SetStateAction<string>>,
   onFocus?: () => void
 }
 
-export default function StyledInput({ Icon, type='text', placeholder='', id='input', className='', onChange, register, setValue, name='', onFocus}: InputProps) {
+export default function StyledInput({ Icon, type='text', placeholder='', id='input', className='', onChange, register, name='', onFocus}: InputProps) {
 
 
 	return (
@@ -31,7 +30,7 @@ export default function StyledInput({ Icon, type='text', placeholder='', id='inp
 				className={`${className} h-full w-full py-2 ${Icon ? 'pl-8' : 'pl-1.5'} border-2 rounded-md text-gray-800 outline-none focus:border-gray-600 `}
 				{...register && {...register(name)}}
 				name={name}
-				onChange={(e) => onChange &&  onChange(e)}
+				onChange={(e) => onChange &&  onChange(e.target.value)}
 			/> 
 		</div>
 	);

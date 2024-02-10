@@ -26,7 +26,7 @@ export default function ProductsContainer({children, isAdmin = false}: {children
 		return <div className=" col-span-4 h-[45vh] flex justify-center items-center mt-12 min-h-screen-minus-nav"><CircularProgress size={'20vh'}/></div> 
 	}
 
-	return <section className="lg:w-[75%] md:w-[80%] w-[85%] grid lg:grid-cols-4  gap-y-12 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 m-auto my-2 relative flex-wrap min-h-screen-minus-nav">
+	return <section className="lg:w-[75%] md:w-[80%] w-[85%] mt-12 grid lg:grid-cols-4  gap-y-12 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 m-auto my-2 relative flex-wrap min-h-screen-minus-nav">
         
 		{products.errors.length > 0 && <div className="w-full col-span-full rounded-lg p-4">
 			{products.errors.map((errMsg, index) => <span key={index} >
@@ -38,8 +38,7 @@ export default function ProductsContainer({children, isAdmin = false}: {children
 		{children}
         
 		{products.products.map(product => { 
-			return <div className="sm:h-[48vh] h-[40vh]" key={product.id}>
-				<div>{JSON.stringify(wishList.products.find((product) => product.product.id === product.id))}</div>
+			return <div className="sm:h-[48vh] h-[65vh] relative" key={product.id}>
 				<Product isAdmin={isAdmin} title={product.name} description={isAdmin ? product.description : undefined} quantity={isAdmin ? product.quantity : undefined} name={isAdmin ? product.name : undefined} price={String(product.price)} customButtomDispatchAction={ () => dispatch(addProduct({productId:product.id || ''}))} id={product.id || ''} />
 			</div>
 		})}

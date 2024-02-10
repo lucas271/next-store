@@ -42,7 +42,7 @@ export default function ToTopIcon(){
 	}, [])
 
 	return <>
-		<div ref={iconRef} className=" cursor-pointer z-50 hidden top-[86%] sm:top-[94%] lg:top-[91%]  left-2 sm:left-6 font-bold bg-slate-300 hover:bg-slate-400 rounded-full sm:w-12 sm:h-12 w-8 h-8  items-center justify-center text-slate-800 hover:text-slate-900 transition-all animate-aside-slide-in-opposite" onClick={scrollToTop} >
+		<div ref={iconRef} className="fixed cursor-pointer z-30  hidden top-[86%] sm:top-[94%] lg:top-[91%]  left-2 sm:left-6 font-bold bg-slate-300 hover:bg-slate-400 rounded-full sm:w-12 sm:h-12 w-8 h-8  items-center justify-center text-slate-800 hover:text-slate-900 transition-all animate-aside-slide-in-opposite" onClick={scrollToTop} >
 			<BsArrowUp/>
 		</div>
 	</>

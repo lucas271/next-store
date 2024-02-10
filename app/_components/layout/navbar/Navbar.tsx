@@ -2,12 +2,19 @@ import SearchItemsBar from "../../shared/searchItemsBar/SearchItemsBar";
 import Hamburguer from "../navbarHamburguer/Hamburguer";
 import IconLinks from "./IconLinkItems";
 import Logo from "../../shared/logo/Logo";
+import CategoryItems from "./CategoryItems";
 export default async function Navbar() {
 	return <>
 		<header className="navbar h-[10vh] z-50 font-def2">
 			<div className={`fixed z-50 w-screen h-[10vh] py-3 text-gray-500 shadow-sm bg-white transition duration-200`}>
-				<nav className="flex h-full  items-center px-8 gap-8 capitalize justify-between sm:justify-around lg:gap-0  sm:px-5 md:px-3 lg:px-4">
-					<Logo/>
+				<nav className="flex h-full items-center px-8 gap-8 capitalize justify-between sm:justify-evenly lg:gap-0  sm:px-5 md:px-3 lg:px-4">
+					<div className="flex gap-8">
+						<Logo/>
+						<ul className=" list-none items-center sm:flex hidden gap-4 text-lg">
+							<CategoryItems/>
+						</ul>
+					</div>
+
 					<Hamburguer />
 					<div className="hidden sm:inline">
 						<SearchItemsBar className="text-2xl sm:text-sm md:text-lg lg:text-xl w-full"/>

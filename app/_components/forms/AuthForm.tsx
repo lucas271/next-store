@@ -16,6 +16,11 @@ import { useState } from "react";
 export default function AuthForm({isSignIn}: {isSignIn: boolean}){
 	const user = useAppSelector(state => state.user)
 	const router = useRouter()
+
+	const [email, setEmail] = useState<string>('')
+	const [name, setName] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
+	const [repeatPassword, setRepeatPassword] = useState<string>('')
 	const [nextAuthErrors, setNextAuthErrors] = useState<string[]>([]) 
 
   type AuthType = typeof isSignIn extends true ? SignInType : SignUpType
@@ -41,18 +46,18 @@ export default function AuthForm({isSignIn}: {isSignIn: boolean}){
   					return <span key={index}><ErrorMessage message={error}/></span>
   				})}
   				{errors.email?.message && <ErrorMessage message={errors.email.message}/>}
-  				<StyledInput id="email" Icon={AiOutlineMail} register={register} name="email" placeholder="Email"/>
+  				<StyledInput id="email" Icon={AiOutlineMail} register={register} name="email" placeholder="Email" value={email} onChange={setEmail}/>
               
   				{ !isSignIn && <>               
   					{errors.name?.message && <ErrorMessage message={errors.name.message}/>}
-  					<StyledInput id="username" Icon={BsPersonCircle} register={register} name="name" placeholder="Nome de usuario"/>
+  					<StyledInput id="username" Icon={BsPersonCircle} register={register} name="name" placeholder="Nome de usuario" value={name} onChange={setName}/>
   				</>}
 
   				{errors.password?.message && <ErrorMessage message={errors.password.message}/>}
-  				<StyledInput type="password" id="password" Icon={BsLock} register={register} name="password" placeholder="Senha"/>
+  				<StyledInput type="password" id="password" Icon={BsLock} register={register} name="password" placeholder="Senha" value={password} onChange={setPassword}/>
   				{!isSignIn &&<>
   					{errors.repeatPassword?.message && <ErrorMessage message={errors.repeatPassword.message}/>}
-  					<StyledInput type="password" id="repeatPassword" Icon={BsLock} register={register} name="repeatPassword" placeholder="Repetir a senha"/>
+  					<StyledInput type="password" id="repeatPassword" Icon={BsLock} register={register} name="repeatPassword" placeholder="Repetir a senha" value={repeatPassword} onChange={setRepeatPassword}/>
   				</>
   				}
   			</div>

@@ -7,7 +7,7 @@ export default forwardRef<HTMLElement | null, {}>((_props, ref) => {
 	return <>
 		<aside
 			ref={ref}
-			className={`fixed top-0 left-0 w-screen h-screen bg-white z-40 animate-aside-slide-in overflow-auto sm:hidden`}
+			className={`fixed top-0 left-0 w-screen h-screen bg-white z-[40] animate-aside-slide-in overflow-auto sm:hidden`}
 		>
 			<div className="h-[10vh] w-full"></div>
 			<ul className="flex flex-col items-center min-h-screen-minus-nav capitalize ">

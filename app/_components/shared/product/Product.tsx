@@ -22,8 +22,11 @@ const Product = ({price, title, name, description, quantity,  id, customButtomDi
 		const userResponse = confirm('Isso irá excluir esse item. Tem Certeza?')
 		userResponse && dispatch(removeProduct(id))  
 	}
+
+	console.log(customButtomDispatchAction, id)
+
 	return <>
-		<section className={"w-full sm:h-[48vh] h-[40vh]  flex-shrink-0 animate hover:white hover:border-2 transition-all group relative cursor-pointer " + (isUpdate && 'p-2 border-2')}>
+		<section className={"w-full h-full  flex-shrink-0 animate hover:white hover:border-2 transition-all group relative cursor-pointer " + (isUpdate && 'p-2 border-2')}>
 			{!isAdmin ? 
 				<HeartIcon id={id}/>: 
 				<span className="absolute top-3 right-4  z-40 cursor-pointer  flex gap-2">

@@ -3,20 +3,20 @@ import Link from "next/link";
 const bgImg = '/splash.jpg'
 const items = [{
 	img: '/bottle.png',
-	title: 'Bunda mole ite2m',
-	text: 'Esse item de bunda mole so serve para pessoas bunda moles. não tem pq comprar cara se vc é normal.',
+	title: 'item',
+	text: 'Esse item é o item 1',
 	price: 32.64
 },
 {
 	img: '/bottle.png',
-	title: 'Bunda mole it1em',
-	text: 'Esse item de bunda mole so serve para pessoas bunda moles. não tem pq comprar cara se vc é normal.',
+	title: 'item2',
+	text: 'Esse item é o item 2',
 	price: 32.64
 },
 {
 	img: '/bottle.png',
-	title: 'Bunda mole item',
-	text: 'Esse item de bunda mole so serve para pessoas bunda moles. não tem pq comprar cara se vc é normal.',
+	title: 'item3',
+	text: 'Esse item é o item 3',
 	price: 32.64
 }
 ]

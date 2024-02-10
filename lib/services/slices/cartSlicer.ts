@@ -103,6 +103,7 @@ export const addProduct = createAsyncThunk('cart/AddProduct', async ({productId,
 		const user = session?.user
 		if(!user) throw {errors: ['did not receive a user']}
 		const response = await axios.put('/api/controllers/cart', {type: 'addProduct', userId: user.id, productId, increment}).then(res => res).catch(res => {
+			console.log(res.response)
 			throw JSON.stringify({errors: [...res.response.data.errors]})
 		})
 		if(response.data.errors?.length > 0) throw {errors: [...response.data.errors]}
