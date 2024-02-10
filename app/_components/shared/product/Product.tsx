@@ -23,8 +23,6 @@ const Product = ({price, title, name, description, quantity,  id, customButtomDi
 		userResponse && dispatch(removeProduct(id))  
 	}
 
-	console.log(customButtomDispatchAction, id)
-
 	return <>
 		<section className={"w-full h-full  flex-shrink-0 animate hover:white hover:border-2 transition-all group relative cursor-pointer " + (isUpdate && 'p-2 border-2')}>
 			{!isAdmin ? 

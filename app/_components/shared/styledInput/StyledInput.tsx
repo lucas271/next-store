@@ -12,8 +12,8 @@ interface InputProps {
   value?: string;
   register?: UseFormRegister<any>
   name?: string,
-  onChange?: Dispatch<SetStateAction<string>>,
-  onFocus?: () => void
+  onChange?: Dispatch<SetStateAction<string>> | ((e: string) => Promise<void>),
+  onFocus?: () => void,
 }
 
 export default function StyledInput({ Icon, type='text', placeholder='', id='input', className='', onChange, register, name='', onFocus}: InputProps) {

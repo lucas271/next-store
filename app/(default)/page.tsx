@@ -11,9 +11,7 @@ export default async function Home() {
 		<main className=" font-def3 pb-[8vh] sm:pb-[0vh] min-h-screen">
 			<Banner/>
 			<CarrouselComponent/>
-			<ReduxProvider>
-				<RecommendationComponent/>
-			</ReduxProvider>
+			<RecommendationComponent/>
 		</main>
 	)
 }

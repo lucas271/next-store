@@ -12,6 +12,7 @@ const SearchItemsBar = ({className}: {className?: string}) => {
 	const [isSearchActive, setIsSearchActive] = useState<boolean>(false)
 	const searchRef = useRef<null | HTMLDivElement>(null)
 	const route = useRouter()
+	const [searchQuery, setSearchQuery] = useState<string>('')
 	const [searchBarResult, setSearchBarResult] = useState<productSliceType[]>([])
 
 	//searchRef is only if I decided to create a out animation for this after.
@@ -31,14 +32,13 @@ const SearchItemsBar = ({className}: {className?: string}) => {
 	}, [isSearchActive]);
 
 	//It needs to be done specifically here, so IT does not disturbs page specif redux logic. 
-	//I could Also pass a reduxProvider specifically for this component on the parent component
-	//but I wanted to try doing an api call inside the component so I took the oportunity : < )
-	const handleSeachBarChange = async (e?: ChangeEvent<HTMLInputElement>): Promise<void> => {
+	const handleSeachBarChange = async (inputQueryValue: string): Promise<void> => {
 		try {
+			setSearchQuery(inputQueryValue)
 			const response = await axios.get('/api/controllers/product?productCredencials='+JSON.stringify({
 				type: 'products',
 				limit: 5,
-				startsWith: e?.target.value ? e.target.value: '',
+				startsWith: inputQueryValue ,
 				sortBy: {mostFavorites: true}
 			})).then(res => res).catch(res => {
 				throw JSON.stringify({errors: [...res.response.data]})
@@ -54,13 +54,13 @@ const SearchItemsBar = ({className}: {className?: string}) => {
 	const HandleFocus = async (): Promise<void> => {
 
 		//ensure you'll have some search result even when searchBar is first initialized, I need to further work on this to solver unnecesary recalling pbl.
-		await handleSeachBarChange()
+		await handleSeachBarChange(searchQuery)
 		setIsSearchActive(true)
 	}
 
 	return <>
 		<div className="w-full relative" ref={searchRef}>
-			<StyledInput Icon={BsSearch} className={`text-2xl w-full ${className}`} id="searchBar" onFocus={HandleFocus} name="searchBar" onChange={handleSeachBarChange}/>
+			<StyledInput Icon={BsSearch} className={`text-2xl w-full ${className}`} id="searchBar" onFocus={HandleFocus} name="searchBar" value={searchQuery} onChange={handleSeachBarChange}/>
 
 			{isSearchActive && <ul className="absolute  w-full sm:w-[375%] md:w-[200%] sm:-left-[200%]  md:-left-[50%] z-50 bg-slate-200 rounded-md">
 				{searchBarResult.slice(0, 5).map(searchResult => {
