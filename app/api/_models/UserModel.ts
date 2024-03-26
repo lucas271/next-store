@@ -33,6 +33,7 @@ class User{
 				email: this.body.email
 			}
 		})
+		console.log(this.response,'fpsdapfl')
 		if(this.response) return
 		const user = await this.prisma.user.create({
 			data: {
@@ -41,8 +42,9 @@ class User{
 				image: this.body.profilePic,
 				id: this.body.id
 			}
-		}).catch(() => {
-			this.errors.push('error creating user')})
+		}).catch((err) => {
+			console.log(err)
+			return this.errors.push('error creating user')})
 		if(this.errors.length > 0) return
 		this.response = user
 		return this.response =  user
@@ -50,6 +52,7 @@ class User{
 
 	public async handleProviderCredentials(){
 		const isUser = await this.getUserCredentials()
+		console.log('b')
 		if(isUser) {
 			this.validateUser()
 		
@@ -121,7 +124,8 @@ class User{
 		select: {
 			userCredential: true
 		}
-		}).catch(() => {
+		}).catch((err) => {
+			console.log(err)
 			this.errors.push("Erro ao tentar encontrar usuário")
 			return null
 		})

@@ -36,10 +36,9 @@ export default function ProductsContainer({children, isAdmin = false}: {children
 			<StyledButton text="Atualizar" onClick={() => dispatch(getProducts({}))} className={'p-3'}/>
 		</div>}
 		{children}
-        
 		{products.products.map(product => { 
 			return <div className="sm:h-[48vh] h-[65vh] relative" key={product.id}>
-				<Product isAdmin={isAdmin} title={product.name} description={isAdmin ? product.description : undefined} quantity={isAdmin ? product.quantity : undefined} name={isAdmin ? product.name : undefined} price={String(product.price)} customButtomDispatchAction={ () => dispatch(addProduct({productId:product.id || ''}))} id={product.id || ''} />
+				<Product isAdmin={isAdmin} img={String(product.img)} title={product.name} description={isAdmin ? product.description : undefined} quantity={isAdmin ? product.quantity : undefined} name={isAdmin ? product.name : undefined} price={String(product.price)} customButtomDispatchAction={ () => dispatch(addProduct({productId:product.id || ''}))} id={product.id || ''} />
 			</div>
 		})}
 	</section>

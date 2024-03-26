@@ -10,7 +10,7 @@ import { removeProduct } from "@/lib/services/slices/productSlice"
 import ProductForm from "../../forms/ProductForm"
 import HeartIcon from "../heartIcon/HeartIcon"
 
-const Product = ({price, title, name, description, quantity,  id, customButtomDispatchAction, customButtonText = '+ carrinho', isAdmin = false}: {isAdmin?: boolean, price?: string, id: string, name?: string, description?: string, quantity?: number, title?: string, customButtomDispatchAction?: () => void, iconAction?: () => void, customButtonText?: string}) => {
+const Product = ({price, img, title, name, description, quantity,  id, customButtomDispatchAction, customButtonText = '+ carrinho', isAdmin = false}: {isAdmin?: boolean, img?: string, price?: string, id: string, name?: string, description?: string, quantity?: number, title?: string, customButtomDispatchAction?: () => void, iconAction?: () => void, customButtonText?: string}) => {
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 
@@ -24,7 +24,7 @@ const Product = ({price, title, name, description, quantity,  id, customButtomDi
 	}
 
 	return <>
-		<section className={"w-full h-full  flex-shrink-0 animate hover:white hover:border-2 transition-all group relative cursor-pointer " + (isUpdate && 'p-2 border-2')}>
+		<section className={"w-full h-full border-grey border-2 flex-shrink-0 animate hover:white hover:border-2 transition-all group relative cursor-pointer" + (isUpdate && 'p-2 border-2')}>
 			{!isAdmin ? 
 				<HeartIcon id={id}/>: 
 				<span className="absolute top-3 right-4  z-40 cursor-pointer  flex gap-2">
@@ -37,7 +37,7 @@ const Product = ({price, title, name, description, quantity,  id, customButtomDi
 			{ !isUpdate ? <>
 				<div className="w-full h-full relative bg-opacity-30 bg-transparent transition-all group-hover:inline-block z-20  group-hover:bg-slate-800 group-hover:bg-opacity-30 ">
 					<div className={"h-3/6  relative   cursor-pointer -z-10 "}>
-						<Image src='/bottle.png' alt="bottle" fill sizes="100%" className="-z-10"/>
+						<Image src={img?.startsWith('data:image') ? img : '/bottle.png'} alt="bottle" fill sizes="100%" className="-z-10"/>
 					</div>
 					<div  className="h-3/6 flex flex-col justify-evenly w-3/4 m-auto text-center">
 						<div className="text-gray-700 uppercase overflow-clip pt-1 flex flex-col justify-between w-full text-sm sm:text-lg">

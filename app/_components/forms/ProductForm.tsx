@@ -18,18 +18,34 @@ const AddProductForm = ({setIsOpen, isUpdate=false, productId, placeholderName, 
   const {register, handleSubmit, formState: {errors}, reset, clearErrors} = useForm<productFormType>({
   	resolver: zodResolver(isUpdate ? editProductValidation : addProductValidation),
   })
-
  
 
-  function validate(data: productFormType){
+  async function validate(data: productFormType){
+	const base64File = await new Promise((resolve, reject) => {
+		if(!data.img) return
+		const reader = new FileReader();
+
+		reader.onload = () => {
+			resolve(reader.result);
+		};
+
+		reader.onerror = error => {
+			reject(error);
+		};
+
+		reader.readAsDataURL(data.img);
+	});
   	if(!Number(data.price) || !Number(data.quantity)) return
   	if(isUpdate && !productId) return 
-  	if(isUpdate) dispatch(updateProduct({productId: productId || '', updateInfo: {...data, price: Number(data.price), quantity: Number(data.quantity)}}))
-  	else {dispatch(addProduct({...data, price: Number(data.price), quantity: Number(data.quantity)}))}
+  	if(isUpdate) dispatch(updateProduct({productId: productId || '', updateInfo: {...data, img: String(base64File),  price: Number(data.price), quantity: Number(data.quantity)}}))
+  	else {dispatch(addProduct({...data, img: String(base64File), price: Number(data.price), quantity: Number(data.quantity)}))}
   	setIsOpen(false)
   	reset()
   	clearErrors()
   }
+
+
+  
 
   return <>
   	<form onSubmit={handleSubmit(validate)} className="flex flex-col justify-center  gap-5 h-full overflow-auto">
@@ -38,7 +54,10 @@ const AddProductForm = ({setIsOpen, isUpdate=false, productId, placeholderName, 
   				<ErrorMessage message={errMessage}/>
   			</div>
   		})}
-  		{errors.name?.message && <ErrorMessage message={errors.name.message}/>}
+
+		{errors.img?.message && <ErrorMessage message={errors.img.message} />}
+		<input type='file' {...register('img')} name="img"/>
+  		{errors.name?.message && <ErrorMessage message={errors.name.message} />}
   		<StyledInput placeholder={placeholderName ? "nome: " +placeholderName : "nome do produto"} name="name" id="name" register={register}/>
   		{errors.description?.message && <ErrorMessage message={errors.description.message}/>}
   		<StyledInput placeholder={placeholderDescription ? "descrição: " +placeholderDescription : "descrição do produto"} name="description" id="description" register={register}/>

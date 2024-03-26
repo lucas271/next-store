@@ -33,8 +33,8 @@ export default function AuthForm({isSignIn}: {isSignIn: boolean}){
 		...data, redirect: false
 	}).then((response) => {
 		if(response?.ok) return router.push('/')
-		const errorParsed: string[] = JSON.parse(String(response?.error)) || ['Não foi possivel entrar na conta :(']
-		setNextAuthErrors(errorParsed)
+		const errorParsed: {errors: string[]} = JSON.parse(String(response?.error)) || {errors: ['Não foi possivel entrar na conta :(']}
+		setNextAuthErrors(errorParsed.errors)
 	})
   }
 
