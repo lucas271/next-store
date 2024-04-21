@@ -4,7 +4,8 @@ import Email from 'next-auth/providers/email';
 import validator from "validator";
 
 export interface UserBodyInterface{
-  id?: string
+  id?: string,
+  type?: 'signIn' | 'signUp',
   email: string,
   name: string,
   password: string,
@@ -33,7 +34,6 @@ class User{
 				email: this.body.email
 			}
 		})
-		console.log(this.response,'fpsdapfl')
 		if(this.response) return
 		const user = await this.prisma.user.create({
 			data: {
@@ -52,7 +52,8 @@ class User{
 
 	public async handleProviderCredentials(){
 		const isUser = await this.getUserCredentials()
-		console.log('b')
+
+		if(this.body.type === 'signIn' && !isUser) return this.errors.push('user not found')
 		if(isUser) {
 			this.validateUser()
 		
@@ -114,7 +115,6 @@ class User{
 		this.response = user
 	}
 	private async getUserCredentials(){
-
 		const user = await this.prisma.user.findFirst({where: {
 			OR: [
 				{ email: this.body.email },
@@ -129,7 +129,6 @@ class User{
 			this.errors.push("Erro ao tentar encontrar usuário")
 			return null
 		})
-
 		return user
 	}
 	public async loginUser(){

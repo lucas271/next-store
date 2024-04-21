@@ -22,24 +22,26 @@ export default function AuthForm({isSignIn}: {isSignIn: boolean}){
 	const [password, setPassword] = useState<string>('')
 	const [repeatPassword, setRepeatPassword] = useState<string>('')
 	const [nextAuthErrors, setNextAuthErrors] = useState<string[]>([]) 
-
+	const [loading, setLoading] = useState<boolean>(false)
   type AuthType = typeof isSignIn extends true ? SignInType : SignUpType
   const {register, handleSubmit, formState: {errors}} = useForm<AuthType>({
   	resolver: zodResolver(isSignIn ? signInValidation : signUpValidation),
   })
 
   const validate = async (data: AuthType) => {
+	setLoading(true)
 	return await signIn('credentials', {
-		...data, redirect: false
+		...data, type: isSignIn ? 'signIn' : 'signUp', redirect: false
 	}).then((response) => {
+		setLoading(false)
 		if(response?.ok) return router.push('/')
 		const errorParsed: {errors: string[]} = JSON.parse(String(response?.error)) || {errors: ['Não foi possivel entrar na conta :(']}
 		setNextAuthErrors(errorParsed.errors)
-	})
+	}).catch(() => setLoading(false))
   }
 
   return <>
-  	{user.loading ? <div className="w-full flex align-middle justify-center"><CircularProgress size={'10vh'}/></div> :<>
+  	{user.loading || loading ? <div className="w-full flex align-middle justify-center"><CircularProgress size={'10vh'}/></div> :<>
   		<form action="" onSubmit={handleSubmit(validate)} className=" mt-4 flex flex-col gap-6 ">
   			<div className="space-y-2 w-full">
   				{[...user.errors, ...nextAuthErrors].map((error, index) => {

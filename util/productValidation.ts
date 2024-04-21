@@ -1,27 +1,4 @@
 import {z} from 'zod'
-const convertImgTobase64 = async (event: any) => {
-    const fileType = event.type.split('/')[0];
-    if(fileType !== 'image') return
-    
-    const reader = new FileReader();
-    reader.readAsDataURL(event);
-    const error = []
-    reader.onload = async () => {
-      const img = new Image();
-      img.src = URL.createObjectURL(event);
-      const isValidImg = await new Promise((resolve) => {
-        img.onload = () => {
-          resolve(((img.width / img.height) * 100  >= 100 && (img.width / img.height) * 100 <= 130) || (img.height / img.width) * 100  >= 100 && (img.height / img.width) * 100 <= 110 ? resolve(true) : resolve(false))
-        };
-      });   
-
-      if(isValidImg) return true
-
-    };
-    reader.result
-	reader.onerror = (error) => console.error("Error converting file to base64:", error);
-  };
-
 
 export const addProductValidation = z.object({
   title: z.string().min(1,'campo titulo está vazio').toUpperCase(),
